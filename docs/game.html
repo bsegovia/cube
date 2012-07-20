@@ -1,0 +1,581 @@
+<html>
+	<head>
+		<title>cube fps game</title></head>
+	<body text="#ffffff" vLink="#ff9900" aLink="#ff9900" link="#ffbb00" bgColor="#302c28">
+		<font face="verdana,trebuchet ms,zurich bt,tahoma,arial,helvetica,sans-serif">
+			<center>&nbsp;&nbsp;
+				<p>
+					<table width="80%">
+						<TBODY>
+							<tr>
+								<td bgColor="#662222"><font size="3"><strong>Gameplay related console commands </strong>
+									</font>
+								</td>
+							</tr>
+							<tr>
+								<td><font size="-1"><pre><font size=3>    map M     </font></pre>
+										loads a map. if connected to a multiplayer server, votes to load this map 
+										(others will have to&nbsp;type "map M" as well to agree with loading this 
+										map).&nbsp;To vote for a map with a specific mode, set the mode before you 
+										issue the map command (see multiplayer menu). See also map in the editref.
+										<pre><font size=3>    name yourname     </font></pre>
+										used for multiplayer
+										<pre><font size=3>    say text...     </font></pre>
+										outputs text to all players, as if you typed it
+										<pre><font size=3>    echo text...     </font></pre>
+										outputs text
+										<pre><font size=3>    saycommand P...     </font></pre>
+										this puts a prompt on screen where you can type stuff into, which will capture 
+										all keystrokes until you press return (or esc to cancel). You may press tab to 
+										autocomplete commands/aliases/variables, and up/down keys to browse the command 
+										history. If what you typed started with a "/", the rest of it will be executed 
+										as a command, otherwise its something you "say" to all players. default key = 
+										t. If P is prefix to insert to the buffer, (default key ` inserts a /).
+										<pre><font size=3>    connect serverip     </font></pre>
+										connects to a server, e.g. "connect fov120.com". There is no serverbrowser nor 
+										paste yet, so you are adviced to paste ips into a suitable bind into your 
+										autoexec.cfg for the moment.
+										<pre><font size=3>    disconnect     </font></pre>
+										leaves server
+										<pre><font size=3>    rate N     </font></pre>
+										sets your clients maximum downstream bandwidth to N bytes per second. Leaving 
+										it at 0 (the default) means the server will dynamically try to do the best 
+										thing, this is recommended for players who don't have a clue what their 
+										bandwidth is (setting your rate unoptimally is worse than not setting it all). 
+										Modem players (56k)&nbsp;could try rate 4000 and tweak from there, dsl players 
+										can try rate 6000-10000. Note that the more players on a server, the more 
+										critical the effect of your rate. If you are tweak addicted, you can try 
+										playing with the variables throttle_decel (how quickly to start dropping 
+										packets when your connection becomes bandwidth limited) throttle_accel (how 
+										quickly to recover once bandwidth becomes available again) and 
+										throttle_interval (how quickly to reestimate the situation). Change the 
+										defaults at your own risk.
+										<pre><font size=3>    team teamname     </font></pre>
+										determines who are your teammates in any team game mode (truncated to 4 
+										characters, case sensitive).
+										<pre><font size=3>    showscores     </font></pre>
+										+showscores turns display of scores (name/frags/network) on and -showscores 
+										turns it off. Default key = tab
+										<pre><font size=3>    conskip N     </font></pre>
+										allows you to browse through the console history, by offsetting the console 
+										output by N. Default key keypad - scrolls into the history (conskip 1) and 
+										keypad + resets the history (conskip -1000).
+										<pre><font size=3>    weapon a b c     </font></pre>
+										Tries to select weapons a, b &amp; c, in that order, if they have ammo (0 = 
+										fist, 1 = sg, 2 = cg, 3 = rl, 4 = rifle). If none of the 3 indicated have any 
+										ammo, it will try the remaining weapons for one with ammo (in order 3/2/1/4/0) 
+										(the fist needs no ammo). You can use the weapon command with 0 to 3 arguments. 
+										examples:
+										<pre><font size=3>
+    weapon 2 1 0     // close up selection
+    weapon 4 3 2     // far away selection
+    weapon 3 2 1     // medium distance selection
+    weapon 0         // humiliate selection :)
+    weapon           // just switch to anything with ammo
+    </font></pre>
+										In any selection, it will skip whichever weapon you have currently selected, so 
+										executing a weapon command repeatedly toggles between the two best weapons with 
+										ammo within a given selection. default keys 0 to 4 select the corresponding 
+										weapons, with sensible default alternatives, middle mouse button is a simple 
+										weapon switch.
+										<pre><font size=3>    gamespeed P     </font></pre>
+										sets the gamespeed in percent, i.e. 50 is playing in slowmotion at half the 
+										speed. does not work in multiplayer. for entertainment purposes only :)
+										<pre><font size=3>    mode N     </font></pre>
+										set gameplay mode to N for the next game played (next map load). N can be:
+										<UL>
+											<LI>
+											0: "ffa" / "default" mode. This is the default normal ffa game, and can also be 
+											used as "prewar" while setting up teams / voting for the next game.&nbsp;
+											<LI>
+											1: coop edit mode. This simply enables map editing in multiplayer, otherwise 
+											identical to mode 0.
+											<LI>
+											2: a standard non teamplay game, meant for FFA and duel games.
+											<LI>
+											3: a standard teamplay game. will work with any number of teams with any number 
+											of players: you are allied with all players whose "team" setting is the same as 
+											yours. In general, all odd numbered modes (3/5/7/9/11) are the teamplay variant 
+											of the even mode preceding it
+											<LI>
+											4/5: instagib mode. No items will spawn, but everyone will have 100 rifle 
+											rounds and 1 health. The fist still works.
+											<LI>
+											6/7: efficiency mode. No items will spawn, but everyone will get all weapons 
+											with 2 ammo packs each, and 256 health on respawn.
+											<LI>
+											8/9: insta arena mode. As efficiency mode, but now when you die you stay dead 
+											until one player or one team remains, then everyone respawns (new round). You 
+											only get the rifle and the fist.
+											<LI>
+											10/11: tactics arena mode. As insta arena mode, but now you get randomly 2 out 
+											of the 4 main weapons with 2 ammo packs each.
+											<LI>
+												-1, -2: single player, see single player mode section below.
+											</LI>
+										</UL>
+										Frag counting is the same for all modes: 1 for a frag, -1 for a suicide or a 
+										teamkill. Timelimit for all games is 10 minutes, or 15 minutes for teamplay, 
+										and no timelimit for mode 1 (and mode 0 in a local game).
+										<P><pre><font size=3>    skill N     </font></pre>
+											Sets the skill level (1-10) for single player modes. Default = 3. Affects 
+											number of monsters in DMSP mode, and general monster AI in all SP modes.
+											<pre><font size=3>    sendmap     </font></pre>
+											<pre><font size=3>    getmap     </font></pre>
+											These two commands allow you to send other players maps they may not have while 
+											in multiplayer mode, and easily keep maps in sync while doing coop edit. 
+											"sendmap" reloads the current map you are on, then uploads it to the server and 
+											sends every other player a message about it. Other players can then simply type 
+											"getmap" to receive the current map, which is written to their local disk then 
+											reloaded. A second variant "sendmap name" is available which is particularly 
+											useful for coop editing, which first does a "savemap name" before performing 
+											the actual "sendmap". Thus in both cases you must already be on the map you 
+											want to send before issuing the command! (in some multiplayer that requires 
+											voting). Also note that "getmap" operates on the last map send by some other 
+											player, whatever it is.
+											<pre><font size=3>    servermenu     </font></pre>
+											displays the server menu. The server menu contains the last N servers you 
+											connected to, sorted by ping (servers are pinged automatically when bringing up 
+											this menu). Just select one to connect again. If you connect to a server by 
+											typing "connect" manually, the server gets added here automatically. You can 
+											also add servers to "servers.cfg" manually.
+											<pre><font size=3>    updatefrommaster     </font></pre>
+											contacts the masterserver and adds any new servers to the server list (written 
+											to servers.cfg on exit). (see also multiplayer menu).
+											<pre><font size=3>    savegame F     </font></pre>
+											Saves the current state of game (map, state of entities, monsters, triggers, 
+											and your player) to a savegame file named F (these are placed in the 
+											"savegames" directory). Default key F8 is "savegame quicksave". Works only in 
+											classic singleplayer mode.
+											<pre><font size=3>    loadgame F     </font></pre>
+											restores a previously saved game named F. Default key F9 is "loadgame 
+											quicksave".&nbsp;You cannot load savegames from different versions of 
+											the&nbsp;map, different versions&nbsp;of cube, or different cpu architectures.
+											<pre><font size=3>    record N     </font></pre>
+											Starts recording of a demo. This works for any multiplayer mode, including the 
+											default "ffa" mode you are in when you load up a map locally. The file is saved 
+											to demos/N.cdgz.
+											<pre><font size=3>    stop     </font></pre>
+											Stops any demo recording or playback.
+											<pre><font size=3>    demo N     </font></pre>
+											Plays back the demo recorded under name N. Playback is interpolated for the 
+											player whose perspective you view (not changeable). Not all parts of the game 
+											may work correctly under demo play, this is an experimental feature. If you 
+											find anything not functioning that greatly hampers your enjoyment of watching 
+											demos, let me know. See below for additional commands to use with demos.
+											<pre><font size=3>    demoplaybackspeed P     </font></pre>
+											Very experimental, may cause more problems than normal play. Set before playing 
+											a demo, P is a percentage, i.e. 200 will play back at twice the speed.
+											<pre><font size=3>    demodelaymsec D     </font></pre>
+											Only touch if you know what you are doing: changes the delay in msec with which 
+											the demo is played back to allow for interpolation. Default is 100, if you 
+											decrease it you will most likely just get choppier (it will obstruct the spline 
+											interpolation) for an unnoticable bit less lag. Increase it if you notice 
+											choppyness in playback, should not be needed in general, but may help if you 
+											insist on playing back demos at very low demoplaybackspeed.
+											<pre><font size=3>    demotracking B     </font></pre>
+											When demotracking is on (B = 1), the camera will create a red particle every 
+											frame where it moves, creating a trail. This can be used to inspect someone's 
+											movement in a game. It will only show the last N particles according to the 
+											maxparticles variable, which you may want to increase to 10000. The particles 
+											will remain even after you stop the demo, so you can use edit mode to look at 
+											it from all angles.
+											<pre><font size=3>    password P     </font></pre>
+										Set the password to P, so you can join servers that are password protected. See 
+										the -p command line option.
+										<P></P>
+										<p>
+									</font>
+					&nbsp;</p>
+				</TD></TR>
+				<tr>
+					<td bgColor="#662222"><font size="3"><strong>Items / Gameplay </strong></font>
+					</td>
+				</tr>
+				<tr>
+					<td><font size="-1">Official game storyline: "You kill stuff. The End."
+							<p>
+							There are initially 5 weapons:
+							<P>
+								<table cellSpacing="0" cellPadding="4" border="1">
+									<tr>
+										<td><FONT size="2">num</FONT></td>
+										<td><FONT size="2">name</FONT></td>
+										<td><FONT size="2">damage</FONT></td>
+										<td><FONT size="2">reload</FONT></td>
+										<td><FONT size="2">dam/sec</FONT></td>
+										<td><FONT size="2">technically similar to</FONT></td>
+									</tr>
+									<tr>
+										<td><FONT size="2">&nbsp;</FONT></td>
+										<td><FONT size="2">&nbsp;</FONT></td>
+										<td><FONT size="2">&nbsp;</FONT></td>
+										<td><FONT size="2">&nbsp;</FONT></td>
+										<td><FONT size="2">&nbsp;</FONT></td>
+										<td><FONT size="2">&nbsp;</FONT></td>
+									</tr>
+									<tr>
+										<td><FONT size="2">0</FONT></td>
+										<td><FONT size="2">fist</FONT></td>
+										<td><FONT size="2">50</FONT></td>
+										<td><FONT size="2">0.25sec</FONT></td>
+										<td><FONT size="2">200</FONT></td>
+										<td><FONT size="2">quake3 gauntlet</FONT></td>
+									</tr>
+									<tr>
+										<td><FONT size="2">1</FONT></td>
+										<td><FONT size="2">shotgun</FONT></td>
+										<td><FONT size="2">200</FONT></td>
+										<td><FONT size="2">1.4sec</FONT></td>
+										<td><FONT size="2">143</FONT></td>
+										<td><FONT size="2">doom2 SSG (wide angle)</FONT></td>
+									</tr>
+									<tr>
+										<td><FONT size="2">2</FONT></td>
+										<td><FONT size="2">chaingun</FONT></td>
+										<td><FONT size="2">30</FONT></td>
+										<td><FONT size="2">0.1sec</FONT></td>
+										<td><FONT size="2">300</FONT></td>
+										<td><FONT size="2">quake LG</FONT></td>
+									</tr>
+									<tr>
+										<td><FONT size="2">3</FONT></td>
+										<td><FONT size="2">rocket launcher</FONT></td>
+										<td><FONT size="2">120</FONT></td>
+										<td><FONT size="2">0.8sec</FONT></td>
+										<td><FONT size="2">150</FONT></td>
+										<td><FONT size="2">quake RL (splash damage)</FONT></td>
+									</tr>
+									<tr>
+										<td><FONT size="2">4</FONT></td>
+										<td><FONT size="2">rifle</FONT></td>
+										<td><FONT size="2">100</FONT></td>
+										<td><FONT size="2">1.5sec</FONT></td>
+										<td><FONT size="2">66</FONT></td>
+										<td><FONT size="2">quake2 RG</FONT></td>
+									</tr>
+								</table>
+							<p>
+							The player has available all weapons when he spawns, but no ammo for them 
+							(except 5 shells), 100 health, and 50 weak armour (20% absorbtion).
+							<p>Items that can be picked up:
+								<UL>
+									<li>
+									4 types of ammo (10 shells, 5 rockets, 20 bullets, 5 rifle rounds) (to a max of 
+									50/25/100/25, respawn 8/6/4 seconds)
+									<li>
+									health (adds 25 to a max of 100, respawn 20/15/10 seconds)
+									<li>
+									health boost (adds 50 to a max of 200, respawn 60 seconds)
+									<li>
+									light armour (100, absorbs 40% of damage, respawn 20 seconds)
+									<li>
+									heavy armour (150, absorbs 60% of damage, respawn 20 seconds)
+									<li>
+										quad powerup (4x damage for 20 seconds, respawn 60 seconds)
+									</li>
+								</UL>
+							Health and ammo respawn depends on number of players in the game, the numbers 
+							given are for 1-2, 3-4, and 5+ player games respectively.
+							<p>
+						</font>&nbsp;</P></td>
+				</tr>
+				<tr>
+					<td bgColor="#662222"><font size="3"><strong>Multiplayer </strong></font>
+					</td>
+				</tr>
+				<tr>
+					<td><font size="-1">Quick start to multiplayer gaming with cube:
+							<ul>
+								<li>
+								Open up autoexec.cfg with an editor and make sure you have your name set to 
+								something unique.
+								<li>
+								Start cube
+								<li>
+								go to the multiplayer menu and select "update from master server", this will 
+								get you the lastest server list (you only need to do this once every day of 
+								multiplayer gaming or so).
+								<li>
+								select the server browser in the multiplayer menu. see how all servers get 
+								pinged automatically and information on player/map/game mode are displayed.
+								<li>
+								select a server with a good ping (near the top of the list, below 200 is very 
+								playable, above may give noticable delays on gameplay events but is still 
+								playable). If you don't find servers with players on, either spend some time 
+								waiting for others, or come to gamesnet #cube to find people to play with.
+								<li>
+								run, shoot and enjoy!
+								<li>
+									you may want to get familiar with the various game modes cube has, and how to 
+									vote for other maps and modes (again, easily done using the multiplayer menu). 
+									Be cooperative with the other players on the server, and vote. Remember, press 
+									T to talk to others.
+								</li>
+							</ul>
+							Setting up a LAN game:
+							<ul>
+								<li>
+								One of the computers on the LAN has to run server.bat. It really doesn't matter 
+								which.
+								<li>
+								The simplest way for all players to connect is for them to type "connect 
+								servername" in the cube console (press ` to get in the console), where 
+								servername is the network name or ip address of the machine running server.bat. 
+								if all went well you should now be in the game together, as above.
+								<li>
+									If your LAN is connected to the internet, by default your server will register 
+									with the masterserver, and players could thus follow the procedure above to 
+									join the game: your server will show up in the list, and may thus be joined by 
+									people over the internet! If you want to avoid your server to contact the 
+									master server, you can start it with -mlocalhost.
+								</li>
+							</ul>
+						</font>&nbsp;
+						<P></P>
+					</td>
+				</tr>
+				<tr>
+					<td bgColor="#662222"><font size="3"><strong>Single player modes </strong></font>
+					</td>
+				</tr>
+				<tr>
+					<td><font size="-1">There are two single player modes:
+							<UL>
+								<LI>
+								a classical progress-based monsters-wake-up-when-they-see-you mode which is 
+								very similar to Doom &amp; Quake, and is played on maps specifically designed 
+								for SP. Items don't respawn.
+								<LI>
+									an arena style SP mode (akin to my "DMSP" mod for quake) which you play on DM 
+									maps: 10 seconds after the game starts monsters start spawning in (currently 
+									about 1 per second), which will immediately be angry at you. The map ends when 
+									they all have spawned and they are all killed (either by you or by their 
+									buddies ;). The number of monsters depends on the "skill" variable. Items 
+									respawn as in DM.
+								</LI>
+							</UL>
+							The mode numbers for these are -2 and -1 respectively, but can most 
+							conveniently be set over the singleplayer menu. In both cases, the map ends 
+							when all monsters are killed, or for classical SP when the end of level trigger 
+							has been hit (if available). Coop play is not supported yet.
+							<p>
+							There are currently&nbsp;8 monsters, with the following properties (sorted 
+							roughly in order of "threat" they pose:
+							<p>
+								<table cellSpacing="0" cellPadding="4" border="1">
+									<tr>
+										<td><FONT size="2">gun used</FONT></td>
+										<td><FONT size="2">model</FONT></td>
+										<td><FONT size="2">damage</FONT></td>
+										<td><FONT size="2">stamina</FONT></td>
+										<td><FONT size="2">speed</FONT></td>
+										<td><FONT size="2">freq</FONT></td>
+										<TD><FONT size="2">lag</FONT></TD>
+										<TD><FONT size="2">rate</FONT></TD>
+										<TD><FONT size="2">loyalty</FONT></TD>
+									</tr>
+									<tr>
+										<td><FONT size="2">&nbsp;</FONT></td>
+										<td><FONT size="2">&nbsp;</FONT></td>
+										<td><FONT size="2">&nbsp;</FONT></td>
+										<td><FONT size="2">&nbsp;</FONT></td>
+										<td><FONT size="2">&nbsp;</FONT></td>
+										<td><FONT size="2">&nbsp;</FONT></td>
+										<TD><FONT size="2"></FONT></TD>
+										<TD><FONT size="2"></FONT></TD>
+										<TD><FONT size="2"></FONT></TD>
+									</tr>
+									<TR>
+										<TD><FONT size="2">bite</FONT></TD>
+										<TD><FONT size="2">hellpig</FONT></TD>
+										<TD><FONT size="2">12</FONT></TD>
+										<TD><FONT size="2">50</FONT></TD>
+										<TD><FONT size="2">22</FONT></TD>
+										<TD><FONT size="2">3</FONT></TD>
+										<TD><FONT size="2">0</FONT></TD>
+										<TD><FONT size="2">10</FONT></TD>
+										<TD><FONT size="2">1</FONT></TD>
+									</TR>
+									<tr>
+										<td><FONT size="2">fireball</FONT></td>
+										<td><FONT size="2">ogro</FONT></td>
+										<td><FONT size="2">5</FONT></td>
+										<td><FONT size="2">100</FONT></td>
+										<td><FONT size="2">14</FONT></td>
+										<td><FONT size="2">3</FONT></td>
+										<TD><FONT size="2">0</FONT></TD>
+										<TD><FONT size="2">10</FONT></TD>
+										<TD><FONT size="2">1</FONT></TD>
+									</tr>
+									<TR>
+										<TD><FONT size="2">iceball</FONT></TD>
+										<TD><FONT size="2">knight</FONT></TD>
+										<TD><FONT size="2">10</FONT></TD>
+										<TD><FONT size="2">250</FONT></TD>
+										<TD><FONT size="2">8</FONT></TD>
+										<TD><FONT size="2">1</FONT></TD>
+										<TD><FONT size="2">0</FONT></TD>
+										<TD><FONT size="2">1</FONT></TD>
+										<TD><FONT size="2">6</FONT></TD>
+									</TR>
+									<TR>
+										<TD><FONT size="2">slimeball</FONT></TD>
+										<TD><FONT size="2">goblin</FONT></TD>
+										<TD><FONT size="2">7</FONT></TD>
+										<TD><FONT size="2">100</FONT></TD>
+										<TD><FONT size="2">12</FONT></TD>
+										<TD><FONT size="2">1</FONT></TD>
+										<TD><FONT size="2">0</FONT></TD>
+										<TD><FONT size="2">20</FONT></TD>
+										<TD><FONT size="2">2</FONT></TD>
+									</TR>
+									<tr>
+										<td><FONT size="2">chaingun</FONT></td>
+										<td><FONT size="2">rhino</FONT></td>
+										<td><FONT size="2">7</FONT></td>
+										<td><FONT size="2">70</FONT></td>
+										<td><FONT size="2">18</FONT></td>
+										<td><FONT size="2">2</FONT></td>
+										<TD><FONT size="2">70</FONT></TD>
+										<TD><FONT size="2">1</FONT></TD>
+										<TD><FONT size="2">2</FONT></TD>
+									</tr>
+									<tr>
+										<td><FONT size="2">shotgun</FONT></td>
+										<td><FONT size="2">ratamahatta</FONT></td>
+										<td><FONT size="2">50</FONT></td>
+										<td><FONT size="2">120</FONT></td>
+										<td><FONT size="2">12</FONT></td>
+										<td><FONT size="2">1</FONT></td>
+										<TD><FONT size="2">100</FONT></TD>
+										<TD><FONT size="2">30</FONT></TD>
+										<TD><FONT size="2">4</FONT></TD>
+									</tr>
+									<tr>
+										<td><FONT size="2">rifle</FONT></td>
+										<td><FONT size="2">slith</FONT></td>
+										<td><FONT size="2">25</FONT></td>
+										<td><FONT size="2">200</FONT></td>
+										<td><FONT size="2">12</FONT></td>
+										<td><FONT size="2">1</FONT></td>
+										<TD><FONT size="2">80</FONT></TD>
+										<TD><FONT size="2">40</FONT></TD>
+										<TD><FONT size="2">4</FONT></TD>
+									</tr>
+									<tr>
+										<td><FONT size="2">rocket launcher</FONT></td>
+										<td><FONT size="2">bauul</FONT></td>
+										<td><FONT size="2">30</FONT></td>
+										<td><FONT size="2">500</FONT></td>
+										<td><FONT size="2">10</FONT></td>
+										<td><FONT size="2">1</FONT></td>
+										<TD><FONT size="2">0</FONT></TD>
+										<TD><FONT size="2">20</FONT></TD>
+										<TD><FONT size="2">6</FONT></TD>
+									</tr>
+								</table>
+							<p>
+							The models are just temp until I find some real monster models.
+							<p>
+							The damage given is for a single shot, where damage is simply a quarter of the 
+							equivalent player gun. For the shotgun this is if he hits you at point blank 
+							range, but is a lot less at distance. RL guy of course deals out splash damage 
+							too.
+							<p>
+							Stamina is the amount of damage taken before dying, speed is their movement 
+							speed in cubes/sec (player = 24), and freq is their relative frequency of 
+							spawning in DMSP mode.
+							<p>
+							<p>
+							"lag" is how long it takes them to press fire after they have decided they will 
+							shoot in a particular direction, which means you can out-strafe their bullets 
+							(but still get hit when standing still or moving towards them). The number is 
+							in msec on skill 0, and half as big on skill 10.
+							<P>
+							"rate" indicates how often they will attempt to shoot you while they have you 
+							in their sights. It is not an absolute fire rate measure, as fire rate is lower 
+							with distance and has some absolute minimum. Again, it is also dependant on 
+							skill (skill 10 fires twice as often as skill 0). "loyalty" indicates how often 
+							they have to be hit by another monster in a row before they fight back.
+							<P>
+							Other important parameters: monsters will at most jump down 4 cubes in height, 
+							unless their health is 100 or less, in which case they allways jump down.
+							<P>
+							As you can summise from the above, the keys to surviving in cube SP are: keep 
+							moving, preferably perpendicular to the monster line of sight, 
+							frequently&nbsp;move behind&nbsp;walls and back&nbsp;(this makes monsters 
+							search for you again, which delays them), and use monster infighting to your 
+							advantage.
+							<P>
+						</font>&nbsp;</P></td>
+				</tr>
+				<tr>
+					<td bgColor="#662222"><font size="3"><strong>Effects of network code on gameplay </strong>
+						</font>
+					</td>
+				</tr>
+				<tr>
+					<td><font size="-1">You will notice that Cube plays better on a high ping connection 
+							than most games out there. The reason for this is that just about everything in 
+							cube is done clientside, not just movement (as is common in games today) but 
+							also aim (the fat client / thin server model).
+							<p>
+							The benefits of this are that the effects of lag are minimised, and someone on 
+							a 200 ping can compete on an almost even playing field with someone with a 20 
+							ping, the disadvantages are mainly in that its harder to combat cheating. 
+							Further advantages for server admins are that cube servers use virtually no 
+							cpu, and very little bandwidth for a lot of clients (you can host a 4 player 
+							game on a modem!).
+							<p>It is impossible to completely hide lag however, and these are some of the 
+								effects that can still show lag if you or someone you play with has a high ping 
+								/ bad connection:
+								<ul>
+									<li>
+										if the connection has packetloss. There is no direct indicator of packetloss, 
+										instead the "packet jump" figure is provided on the hud (use "showscores"). 
+										Packet jump says as much as the amount of milliseconds that pass between 
+										updates from the indicated player. If it is extremely variable, or is 
+										high(&gt;80) then your gameplay may be hampered (players jumping from place to 
+										place). Ideally it is a steady 40 or lower. A consistent packet jump is more 
+										vital to gameplay than ping.
+										<p>
+										Cube uses player prediction based on extrapolation using the physics model, in 
+										an attempt to be both as up to date as possible w.r.t. to the game state, and 
+										as realistic w.r.t. to physics. However, under packet loss this model breaks 
+										down and player movement becomes choppy.
+										<p></p>
+									<li>
+										if ping is high (either yours or someone you play with), some actions may 
+										appear lagged. The effect of ping is generally that the players in a game are 
+										effectively playing more and more seperate games, as someone with a high ping 
+										is "playing in the past". The local effects of this are masked out by client 
+										side movement &amp; aim, but may become noticable across players:
+										<p>
+											<ul>
+												<li>
+													you may get hit by someone even though you are already out of his view. This is 
+													because he is aiming at your movements of a while ago, and his hits take a 
+													while to arrive back at you. You may therefore be hit by gunfire up to his lag 
+													+ your lag milliseconds after you leave his FOV.
+													<p></p>
+												<li>
+													item pickup: you may be denied an item if you try to pick it up at virtually 
+													the same time as someone else (server decides who was "first"). Item pickup is 
+													server side, only when you hear the sound effect have you actually picked up 
+													the item.
+													<p></p>
+												<li>
+													players dying appears lagged. This will improve.</li>
+											</ul>
+										<p></p>
+									<li>
+										if a player is severely lagged (or you are) he temporarily becomes a "ghost" 
+										that cannot be hit (if &gt;1sec packet jump).</li></ul>
+							<p>
+						</font>&nbsp;</P></td>
+				</tr>
+				</TBODY></TABLE></center>
+		</font></P>
+	</body>
+</html>

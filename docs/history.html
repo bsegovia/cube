@@ -1,0 +1,922 @@
+<html>
+	<head>
+		<title>cube history</title></head>
+	<body text="#ffffff" vLink="#ff9900" aLink="#ff9900" link="#ffbb00" bgColor="#302c28">
+		<font face="verdana,trebuchet ms,zurich bt,tahoma,arial,helvetica,sans-serif">
+			<center>&nbsp;&nbsp;
+				<p>
+					<table width="80%">
+						<TBODY>
+							<tr>
+								<td bgColor="#662222"><font size="3"><strong>CHANGE HISTORY LOG (reverse chronological) </strong>
+									</font>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<P><FONT size="-1">
+											<P></P>
+										</FONT>
+								</td>
+							</tr>
+							<tr>
+								<td bgColor="#662222" height="20"><font size="3"><strong> [2005_08_11] </strong></font>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<P><FONT size="-1">
+											<UL>
+												<li>
+												new maps (kurt kesler, JCDPC, makke, mitaman, nieb, fanatic, dcp, spentron, 
+												jf), new mapmodels (dcp, tentus), new songs (fanatic, dcp), textures (various), 
+												pickups/weapons (dcp)
+												<LI>
+												jumppad velocity Z cancellation (better jumps)
+												<LI>
+												fixes where illegal protocol could corrupt client state
+												<LI>
+												vdelta edit/remip fix
+												<LI>
+												out of memory error when shooting rockets at HOM fixed
+												<LI>
+												listen server functionality removed
+												<LI>
+												SP tweaks: slowest monsters move a liiitle faster, some fire a little faster, 
+												rhino has 10% bigger bounding box, all monsters search a little bit longer when 
+												stuck
+												<LI>
+												fixes for sound crashing on linux when no sound device available
+												<LI>
+												command "minmillis" regulates fps on very fast machines (see docs).
+												<LI>
+												maxclients setting for dedicated servers / serverbrowser displays FULL if 
+												maxclients reached
+												<LI>
+												stereo sound effects
+												<LI>
+												auto cfg file saving in config.cfg (defaults.cfg runs if no config.cfg, 
+												autoexec.cfg overrides both)
+												<LI>
+												source mostly 64bit clean, initial testing on amd64 shows everything working
+												<LI>
+												variable "soundbufferlen" allows people to tweak sound under linux
+												<LI>
+												in non-arena MP modes, players are automatically respawned when dead for 10 
+												seconds
+												<LI>
+												"sleep" command can be chained and doesn't give linux compiler errors anymore
+												<LI>
+												jumping on top of monsters or players heads doesn't get you stuck anymore
+												<LI>
+												client &amp; server console now properly flushed for piping purposes
+												<LI>
+												increased sensitivity range
+												<LI>
+												(millis) expression returns milliseconds since engine start
+												<LI>
+												screenshots moved to own folder
+												<LI>
+												removed outdated minlod &amp; fpsrange commands, maps are now always rendered 
+												at maximum detail
+												<LI>
+													gldepthmask fix for linux i810</LI></UL>
+										</FONT>
+								</td>
+							</tr>
+							<tr>
+								<td bgColor="#662222"><font size="3"><strong>[2004_05_22] fix </strong></font>
+								</td>
+							</tr>
+							<tr>
+								<td><FONT size="-1">
+										<P>&nbsp;</P>
+										<UL>
+											<LI>
+											put in workaround for buggy ATI drivers (glReadPixels() result)
+											<LI>
+												tweaked kickback strength for various weapons</LI></UL>
+									</FONT>
+								</td>
+							</tr>
+							<tr>
+								<td bgColor="#662222"><font size="3"><strong>[2004_05_22] </strong></font>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<P><FONT size="-1">
+											<UL>
+												<li>
+												"sleep" command for delayed execution/triggers
+												<LI>
+												LOTS of great new SP and DM maps!
+												<LI>
+												textures are now pre-cached on map load, meaning smoother start of a level, 
+												slightly faster startup time
+												<LI>
+												name is now is maximum 15 characters, say text max 80
+												<LI>
+												monsters animate independently
+												<LI>
+												monsters and players now show "jump" pose when airborne, and lagged players are 
+												shown differently too
+												<LI>
+												water now always renders correctly on top of heighfields
+												<LI>
+												fixed crash on coopedit add entity
+												<LI>
+												weapons have a very subtle kickback for a better shooting "feel"
+												<LI>
+												added a few new trigger types &amp; models (see newent trigger)
+												<LI>
+												rewrote model/mapmodel handling. each map can now define its own set of 
+												mapmodels to use, see default_map_settings.cfg
+												<LI>
+												players/monsters now show death animation, and correctly drop using physics 
+												also after death
+												<LI>
+												"sensitivityscale" variable for lower sens
+												<LI>
+												randomness in lighting is now the same every time, even with dynamic light
+												<LI>
+												monsters don't get stuck in the air anymore when shooting/getting hit etc.
+												<LI>
+												large set of new SP &amp; DM maps!
+												<LI>
+												Completely new soundtrack yet again... this time by Fanatic (Marc A. Pullen).
+												<LI>
+												new textures available! look in packages/dg, and at the end of 
+												default_map_settings.cfg
+												<LI>
+												a large set of new map models courtesy of dcp (see the new entity menus)
+												<LI>
+												"particlesize" command
+												<LI>
+												"musicvol" fixed
+												<li>
+													new enet that fixes double player bug on high pings</li></UL>
+										</FONT>
+								</td>
+							</tr>
+							<tr>
+								<td bgColor="#662222"><font size="3"><strong>[2003_12_23] </strong></font>
+								</td>
+							</tr>
+							<tr>
+								<td><font size="-1">
+										<UL>
+											<li>
+											servers can be password protected (see -p and password)
+											<LI>
+											multiplayer insta/tactics arena modes (see "mode" or the menu).
+											<LI>
+											improved mapmodel physics and configurability, so that they can now be used for 
+											bridges / room over room&nbsp;and other cool uses. See the new "mapmodel" / 
+											"loadmodel" commands, and maps like zippie/aard3/cellar/dragon/matador/kmap2 
+											for examples of the bridge mapmodel.
+											<li>
+											fixed farplane clipping bug
+											<LI>
+											demo recording &amp; playback for multiplayer&nbsp;(experimental feature). See 
+											"record", "stop", and "demo" commands.
+											<LI>
+											"fogcolour" &amp; "scalelights"&nbsp;commands
+											<li>
+											textures now automatically resized to max size supported by driver (mainly for 
+											voodoo3 under linux)
+											<li>
+											server now properly resets its state when no players are connected
+											<li>
+											added mp3/ogg playback (for the "music" command)
+											<li>
+											added the official cube soundtrack (by pingpong) to the distribution (plays on 
+											all DM maps)
+											<LI>
+											new start map (metl3)
+											<li>
+											models now lit subtly according to surrounding light level &amp; colour.
+											<li>
+											singleplayer tweak: slower monsters now move a bit faster, all monsters a bit 
+											easier on lower skill levels
+											<li>
+											new enet that fixes server browser crash on linux
+											<li>
+											added "jumppad" entity (look at the map "zippie" for an example).
+											<li>
+												fixed bug that caused rockets to hover around indefinitely</li></UL>
+									</font>
+									<P></P>
+									<P></P>
+		</font></TD></TR>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2002_10_28] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+							[*nix only] fixed serverbrowser hanging</li>
+					</ul>
+					<P></P>
+				</font>
+			</td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2002_10_20] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+							fixed server with &gt;8 clients crash bug</li>
+					</ul>
+					<P></P>
+				</font>
+			</td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2002_10_16] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						added full source code to the distribution
+						<li>
+						clients can get list of servers from master server (see updatefrommaster)
+						<li>
+						added hudguns
+						<li>
+						servers update the masterserver automatically when run (see -m)
+						<li>
+						server browser, servers are now pinged and map/player info displayed
+						<li>
+						server allows setting of ip address and description
+						<li>
+						player physics are now run at a minimum of 50fps, allowing correct movement 
+						&amp; jumping even at very low fps
+						<li>
+						added random landscape generator (see "perlin")
+						<li>
+						single player game load and save (see "savegame" and "loadgame")
+						<li>
+						improved server correct timer uptime from 49 days to 31 years (on unix).
+						<li>
+						unlimited undo, unlimited size undo/copy/paste (see "undomegs")
+						<li>
+						sounds are now scriptable (see "sound" and "registersound")
+						<li>
+						new trigger types (invisible and end of map)
+						<li>
+						"trigger" command
+						<li>
+						tweaked physics
+						<li>
+						new "fog" variable (for visual effect and performance tweaking)
+						<li>
+							network throtling on lan fixed (eihrul)</li>
+					</ul>
+					<P></P>
+					<P></P>
+				</font>
+			</td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2002_06_24] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						mode 0 is now normal ffa
+						<li>
+						maps now all load a next map in all modi (user definable)
+						<li>
+						when monsters wake up in sp depends on what angle you approach them and your 
+						distance
+						<li>
+						you can control the menus using the mousewheel now
+						<li>
+						all the stronger monsters are now afraid to jump of heights &gt; 4 cubes, 
+						unless they are badly hurt
+						<li>
+						"savemap" now also works without arguments
+						<li>
+						new "history" command
+						<li>
+						new "select" command (allows creating complex geometry from script)
+						<li>
+						tiny scripting language (as extension of the console command language).
+						<li>
+						scripted triggers (see "trigger").
+						<li>
+						per map and per package configuration scripts (custom textures, music, 
+						scripting etc). see map/savemap.
+						<li>
+						new "music" command
+						<li>
+						entering in edit mode in mode -2 now resets monsters and puts them asleep.
+						<li>
+						"entproperty" command allows finetuning of entity parameters
+						<li>
+						say/echo/saycommand now take any number of arguments
+						<li>
+						fixed multiplayer map reloading issues
+						<li>
+						optimised wqd on maps with lots of sky
+						<li>
+						added "loyalty" and other fun things to monster AI
+						<li>
+						added new monsters
+						<li>
+						greatly increased RL speed (not for monsters)
+						<li>
+						HOM cases of heightfields next to higher platforms solved
+						<li>
+						"lighterror" tuning variable
+						<li>
+						model interpolation
+						<li>
+						disconnect now automatically reconnects to local server
+						<li>
+						command line history (up &amp; down keys)
+						<li>
+						hud now shows player in crosshair
+						<li>
+						coloured light: you can&nbsp;use 0..255 (white light) or a hexadecimal 0xRRGGBB 
+						(coloured).
+						<li>
+						cleaned up the hud rendering and put in a higher res font.
+						<li>
+						"overbright lighting" (works on all recent 3d cards, see "lightscale"). Reduce 
+						your "gamma" setting.
+						<li>
+						new additive / exponential light model, for use with overbright.
+						<li>
+						savemap now keeps backups of all previous versions of the map (automatic 
+						versioning)
+						<li>
+						optimised a lot of code: occlusion culler, lighting, md2 rendering, monster AI 
+						&amp; physics.
+						<li>
+						"maxparticles" variable added.
+						<li>
+						added cheap framerate booster, see "skipgeometry"
+						<li>
+							shotgun/chaingun/rifle now also apply a "push" on the target</li>
+					</ul>
+				</font>
+				<P></P>
+				<P></P>
+				</FONT></td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2002_04_10] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						"skill" level now affects monster behaviour in both SP and DMSP (mainly speed 
+						of decision making)
+						<li>
+						hitscan monsters now have a "lag" in their aiming (see gameplay).
+						<li>
+						sounds: water enter/exit, monster wake up, door rumble
+						<li>
+						some colour coding for gridlines in editmode: red for tags and green for 
+						heightfields
+						<li>
+						SP triggers / opening cubes (see "edittag" &amp; "newent trigger")
+						<li>
+						viewkick
+						<li>
+						some particles have gravity, and they spread better. some improved gfx.
+						<li>
+						new variable "crosshairfx"
+						<li>
+						increased undo/copy/paste buffers to 128^2 cubes max
+						<li>
+							fixed DMSP bugs</li>
+					</ul>
+					<P></P>
+				</font>
+			</td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2002_03_25] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						minimal classic SP functionality
+						<li>
+							console improvements: &nbsp;<ul>
+								<li>
+								paste to console (ctrl-V), on win32
+								<li>
+								console aliases (see "alias")
+								<li>
+								command line completion (press TAB) for variables/commands/aliases
+								<li>
+								variables show their current value with no args, or range with wrong args
+								<li>
+									keyrepeat on in console</li>
+							</ul>
+						<li>
+						added server menu that automatically sorts &amp; remembers servers connected to
+						<li>
+						map models (see "newent")
+						<li>
+						added water rendering &amp; physics (see "waterlevel" and "watersubdiv").
+						<li>
+						map voting (usemultiplayer-&gt;vote menu)
+						<li>
+						fixed bug that could cause a "double kill" on a lagged player
+						<li>
+						"hidestats" command
+						<li>
+						hardware gamma correction (see "gamma")
+						<li>
+						MOUSE4 &amp; MOUSE5 are now available to bind mousewheel actions to
+						<li>
+						optimisations to occlusion culler
+						<li>
+						enet fixes (eihrul), backwards incompatible
+						<li>
+							map copying via server (eihrul), see "sendmap"/"getmap"&nbsp;</li>
+					</ul>
+				</font>&nbsp;
+				<P></P>
+			</td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2002_02_01] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						simple DMSP style single player game with monsters! see single player section 
+						in gameplay docs for info.
+						<li>
+						shotgun from 1000 to 1400 msec reload (like doom2 double barrelled, fist from 
+						500 to 250 msec.
+						<li>
+						added crosshairsize &amp; maxroll commands
+						<li>
+						damage blends screen red
+						<li>
+						fixed endianness problems on ppc (eihrul)
+						<li>
+						fixed teleport trigger
+						<li>
+						uses completely new network library by eihrul (UDP instead of TCP), much 
+						improved pings, server scalability &amp; stability under packet loss etc.
+						<li>
+							a standalone *nix version of the server, that doesn't require sound &amp; video 
+							dyn link libs.</li>
+					</ul>
+					<p>
+				</font>&nbsp;</P></td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2001_12_20] aka "first public release" </strong>
+				</font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						added extensive editing tutorial
+						<li>
+						fixed "fullbright"
+						<li>
+						collision on any size corners now works again
+						<li>
+						increased friction tiny bit
+						<li>
+						improved RL physics (more damage close up)
+						<li>
+						cg only makes quad sound once per +attack
+						<li>
+						fixed velocity bug
+						<li>
+						made editmode &amp; gamespeed cheatproof
+						<li>
+						instagib/efficiency work, arena sort of works
+						<li>
+						item spawns are heard at correct distance
+						<li>
+						item pickup is now server side
+						<li>
+						ammo and health respawn speed is now depedant on number of players
+						<li>
+						fixed movement keys (holding both strafe keys at once could cancel movement 
+						altogether in some sequence).
+						<li>
+						console history browsing (keypad - and +)
+						<li>
+						word wrap in console output
+						<li>
+						fixed lighting bug on big corners
+						<li>
+						esc now cancels commandline
+						<li>
+							fixed bug in recursive use of "bind"</li>
+					</ul>
+					<p>
+				</font>&nbsp;</P></td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2001_12_16] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						fixed bug that would generate incorrect mips with coopedit
+						<li>
+						added more buffering to server, which makes connections much more stable.
+						<li>
+						name/team changes correctly updated and displayed
+						<li>
+						teamplay now works, teammates shown in blue (temp)
+						<li>
+						newent/delent now work in coop editing
+						<li>
+						editing solid/space, and paste/undo now recalculates the light in the direct 
+						environment automatically.
+						<li>
+						fixed bug in savemap optimizer
+						<li>
+						added game modes (see "mode")
+						<li>
+						items reset across map load
+						<li>
+						selection size is shown in edit mode.
+						<li>
+						probably fixed weird "void" bug on some systems
+						<li>
+						slowmotion feature ("gamespeed")
+						<li>
+						dynamic light radius can be specified
+						<li>
+						teleport delay to avoid crash when looped
+						<li>
+						changed way entity coordinates are determined.
+						<li>
+						bounded light radius to 32
+						<li>
+							fixed bug in occlusion code that would incorrectly cull cubes at distant 
+							shallow angles.</li>
+					</ul>
+					<p>
+				</font>&nbsp;</P></td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2001_12_03] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						streamlined the opengl code, now all surfaces cull correctly, minimised 
+						overdraw on corners
+						<li>
+						greatly optimized heighfield rendering, generates only a third or so of the 
+						vertices it did before.
+						<li>
+						improved selection on heightfields
+						<li>
+						savemap does a little "optimizing" on invisible textures to correct sloppy 
+						editing, which helps the mipmapper.
+						<li>
+						bumped from version 2 to 3 mapformat: lighting data not saved anymore, but 
+						recalced on map load. This allows maps to keep up with lighting algorithm 
+						changes, and shrinks map sizes dramatically (aard1.cgz is now a mere 3k).
+						<li>
+						fully dynamic shadows &amp; lights (currently only on rockets).
+						<li>
+						adding/deleting light sources now automatically recalcs, manual "recalc" is 
+						deprecated.
+						<li>
+						made light mipmapping less inacurate, at the cost of some polys in some maps.
+						<li>
+						added a "median cut" to the lighting code, which smooths out jaggies on harsh 
+						shadows.
+						<li>
+						reengineered lighting code... insanely fast, but slightly different results 
+						sometimes.
+						<li>
+						added acurate frustrum culling to the occlusion culling mechanism (for pitch 
+						-45..45 cases, and floor/ceil culling). reduces polys yet again 20 to 30% on 
+						average.
+						<li>
+						more acurate and stable fps display
+						<li>
+						added "slope", "arch" and "archvertex" commands.
+						<li>
+						players "bleed" when you hit em, give off correct sound at distance
+						<li>
+						fullbright fix0red
+						<li>
+						very cool texture replacement command ("replace")
+						<li>
+						binding mousekeys for editmode works now, "attack" is same a selection, "jump" 
+						now works.
+						<li>
+						you can now edit the upper wall of a non-solid cube seperately from lower wall 
+						(keypad 7 &amp; 4).
+						<li>
+							bumped from version 1 to 2 mapformat. old maps will be automatically converted 
+							on save, but be sure to keep backups just incase.</li>
+					</ul>
+					<p>
+				</font>&nbsp;</P></td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2001_11_16] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						added high precision dynamic occlusion culling (reduces polys 1.5x to 10x, 
+						depending on map &amp; viewpoint).
+						<li>
+						entity culling too
+						<li>
+						one more case of HOM fix0red (ceilings &amp; floors)
+						<li>
+						menu improvements (esc goes back, remembers state)
+						<li>
+						"mapmsg" command for setting map title &amp; author
+						<li>
+						player talk shows up in different colour
+						<li>
+						edit selection grid now "hugs" heightfields
+						<li>
+						bigger splash &amp; boost on rockets
+						<li>
+						extra pain &amp; death &amp; self-pain sound
+						<li>
+						hud icons for health/armour/ammo
+						<li>
+						reset pitch upon exit teleport
+						<li>
+						proper corner slant collision detection, not enough sliding yet
+						<li>
+						some sort of heighfield physics
+						<li>
+						skybox 10x further away
+						<li>
+						added extensive menu system (press esc..)
+						<li>
+						shrunk exe size even more (53k)
+						<li>
+							made keymapping external cfg file</li>
+					</ul>
+					<p>
+				</font>&nbsp;</P></td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2001_10_21] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						.cube.gz is now .cgz to stop ppl accidentally unpacking maps
+						<li>
+						4 HF cubes are now be mipmapped given their 9 verts lie on 1 plane
+						<li>
+						more cases of HF HOM fixed (see e.g. metl01 YA)
+						<li>
+						full support for 45 degree "corners" between floor levels
+						<li>
+						"map" and "savemap" now default to "base" if no package specified
+						<li>
+						no more HOM caused by mipmapping, even at LOD 5 etc
+						<li>
+						saycommand inserts / on request (default key backquote)
+						<li>
+							"exec" command</li>
+					</ul>
+					<p>
+				</font>&nbsp;</P></td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2001_10_17] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<P><font size="-1"><ul>
+							<li>
+							"showmip" command
+							<li>
+							overhaul of the scene rendering code to use bigger mips even up close
+							<li>
+							minlod command instead of locklod
+							<li>
+							player shoots from slightly below eyeheight
+							<li>
+							configurable FOV
+							<li>
+							much more useful weapon switching: skips current weapon
+							<li>
+							improved chaingun gfx
+							<li>
+							no more shooting on respawn
+							<li>
+							empty input in saycommand produces no output
+							<li>
+							smoothed ping display
+							<li>
+							no more weird model stance when player is lagged
+							<li>
+							teleporters
+							<li>
+							ping display
+							<li>
+							fixed: wobble at low FPS
+							<li>
+							physics: step-up more smooth
+							<li>
+							fixed: map load on initial server connect
+							<li>
+							models 1 off ground, correct 1/16 scale
+							<li>
+								player bounding box 4.1 -&gt; 3.9 cubes height</li>
+						</ul>
+						<P></P>
+						<p>
+					</font>
+				</P>
+			</td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2001_10_05] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+							fixed: delent</li>
+					</ul>
+					<p>
+				</font>&nbsp;</P></td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2001_10_04] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						fixed: corner lighting
+						<li>
+						backup on map save
+						<li>
+						run dedicated server at hi pri -&gt; MUCH better network perf
+						<li>
+						fullbright, for editing
+						<li>
+						map enlarge command
+						<li>
+						configurable mousebuttons
+						<li>
+						config screen res &amp; full screen
+						<li>
+						mouse sensitivity bind
+						<li>
+						fixed: lighting on/off flickers -&gt; also drawing less quads now!
+						<li>
+						fixed: draw wall textures right-side up
+						<li>
+						show entities in edit mode + type
+						<li>
+						fixed: old entities kept on "newmap"
+						<li>
+						skybox (with few sparkies, thanks to depth buffer trick)
+						<li>
+						show/make selection while dragging
+						<li>
+						when drag-selecting into the void, use player pos for selection
+						<li>
+						disable non draw lagged
+						<li>
+						make bigger steps in lod if fps difference is big
+						<li>
+						playerstart should take current yaw
+						<li>
+						variable light brightness (different start from 255)
+						<li>
+						server msg parsing
+						<li>
+						client &amp; server item pickup
+						<li>
+							item effects on the player</li>
+					</ul>
+					<p>
+				</font>&nbsp;</P></td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[2001_09_30] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1"><ul>
+						<li>
+						coop network editing!
+						<li>
+						corner physics bug
+						<li>
+						bal got stuck under ghost?
+						<li>
+						interpolation doesnt work
+						<li>
+						player height
+						<li>
+						players get stuck in eachother
+						<li>
+						interpolation of client positions / bound speed of updates
+						<li>
+						fps independant velocity?
+						<li>
+						jump anim
+						<li>
+						removal of non-responding players after n-sec
+						<li>
+						messages still cut up server side!!!!
+						<li>
+						slowdown of client time (msec!) -&gt; vtdapi.vxd bug
+						<li>
+						particle overlapping
+						<li>
+						mipmapping off?
+						<li>
+						shot/damage doesn't work with player1
+						<li>
+						editing client keeps getting gravity
+						<li>
+						don't frag editing people
+						<li>
+						correct bounding box hits
+						<li>
+						frag counts
+						<li>
+						lag type display instead of second lag msg
+						<li>
+						client gets kicked on wrong protocol
+						<li>
+						fade particle faster
+						<li>
+						can't frag body
+						<li>
+						make dead/lagged people non-solid
+						<li>
+						special model stance for edit
+						<li>
+						vary minlod when looking down
+						<li>
+						server bandwidth status output
+						<li>
+						pain sound when shooting others
+						<li>
+						allow to start with no sound
+						<li>
+						when dead no edit mode
+						<li>
+						teamname, soundvol
+						<li>
+						play sounds at correct distance
+						<li>
+						remove all possible buffer overflows from code
+						<li>
+						tweak physics to be smoother / bit less aircontrol
+						<li>
+						repeat key for edit mode
+						<li>
+						fist/sg/cg/rl weapons graphics/scoring/physics/selection
+						<li>
+							improved explosion</li>
+					</ul>
+					<p>
+				</font>&nbsp;</P></td>
+		</tr>
+		<tr>
+			<td bgColor="#662222"><font size="3"><strong>[older history deleted] </strong></font>
+			</td>
+		</tr>
+		<tr>
+			<td><font size="-1">
+					<p>
+				</font>&nbsp;</P></td>
+		</tr>
+		</TBODY></TABLE></CENTER></FONT></P>
+	</body>
+</html>

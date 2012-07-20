@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="headers">
+      <UniqueIdentifier>{e4ea37a9-8511-46bc-aeb7-52d0bbc9a132}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="headers\eneth">
+      <UniqueIdentifier>{09c41637-4b47-44ca-ae95-3a639f4f51e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="docs">
+      <UniqueIdentifier>{16d5d4f0-590b-41e0-b1be-d3c68c49bd21}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{cf4b9c79-0788-4ad8-a96f-042307083f13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cs">
+      <UniqueIdentifier>{9793f94f-7160-4a35-8e8a-379cb71e4daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cs\enet">
+      <UniqueIdentifier>{072a2f3e-5e28-4217-bf45-16e58bc27bee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="world">
+      <UniqueIdentifier>{eb07ee31-c312-4f43-a214-dde4b76b12c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{d7abbc53-e88c-4d50-ba58-9299fed0d9e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support">
+      <UniqueIdentifier>{0c70ce8f-1287-424b-b94d-624685f30084}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cfg">
+      <UniqueIdentifier>{172e1d3a-ffdd-40c2-92c8-7031607e3dc0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\cube.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\protos.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tools.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\enet\include\enet\enet.h">
+      <Filter>headers\eneth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\enet\include\enet\list.h">
+      <Filter>headers\eneth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\enet\include\enet\memory.h">
+      <Filter>headers\eneth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\enet\include\enet\protocol.h">
+      <Filter>headers\eneth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\enet\include\enet\time.h">
+      <Filter>headers\eneth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\enet\include\enet\types.h">
+      <Filter>headers\eneth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\enet\include\enet\unix.h">
+      <Filter>headers\eneth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\enet\include\enet\utility.h">
+      <Filter>headers\eneth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\enet\include\enet\win32.h">
+      <Filter>headers\eneth</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\cube\docs\config.html">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\src\CUBE_TODO.txt">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\cube\docs\editing.html">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\cube\docs\editref.html">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\cube\docs\game.html">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\cube\docs\history.html">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\cube\readme.html">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\readme.txt">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\cube\data\default_map_settings.cfg">
+      <Filter>cfg</Filter>
+    </None>
+    <None Include="..\cube\data\menus.cfg">
+      <Filter>cfg</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\rendercubes.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderextras.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\rendergl.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\rendermd2.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderparticles.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\rendertext.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\client.cpp">
+      <Filter>cs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\clientextras.cpp">
+      <Filter>cs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\clientgame.cpp">
+      <Filter>cs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\clients2c.cpp">
+      <Filter>cs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\server.cpp">
+      <Filter>cs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\serverbrowser.cpp">
+      <Filter>cs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\serverms.cpp">
+      <Filter>cs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\serverutil.cpp">
+      <Filter>cs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\enet\callbacks.c">
+      <Filter>cs\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\enet\host.c">
+      <Filter>cs\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\enet\list.c">
+      <Filter>cs\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\enet\memory.c">
+      <Filter>cs\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\enet\packet.c">
+      <Filter>cs\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\enet\peer.c">
+      <Filter>cs\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\enet\protocol.c">
+      <Filter>cs\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\enet\unix.c">
+      <Filter>cs\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\enet\win32.c">
+      <Filter>cs\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\editing.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\rndmap.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\world.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\worldio.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\worldlight.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\worldocull.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\worldrender.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\monster.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\physics.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\savegamedemo.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\weapon.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\command.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\console.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\menus.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\pch.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tools.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
