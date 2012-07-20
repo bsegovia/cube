@@ -1,4 +1,5 @@
-Cube source code license, usage, and documentation.
+Cube source code license, usage, and documentation. The code has been cleaned to
+work with newest compilers (tested on GCC 4.6 and Visual Studio 2010).
 
 You should read this file IN ITS ENTIRETY if you wish to do anything with
 the cube source code, even a mere build. Own builds are not necessarily
@@ -7,7 +8,6 @@ compatible with the officially released binaries, read below.
 You may use the cube source code if you abide by the ZLIB license
 http://www.opensource.org/licenses/zlib-license.php
 (very similar to the BSD license) with the additional clause below:
-
 
 LICENSE
 =======
