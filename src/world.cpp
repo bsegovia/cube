@@ -318,7 +318,7 @@ void empty_world(int factor, bool force)    // main empty world creation routine
         s->wtex = s->utex = DEFAULT_WALL;
         s->type = SOLID;
         s->floor = 0;
-        s->ceil = 16;
+        s->ceil = 127;
         s->vdelta = 0;
         s->defer = 0;
     };

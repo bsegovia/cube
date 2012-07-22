@@ -62,7 +62,7 @@ enet_time_set (enet_uint32 newTimeBase)
     struct timeval timeVal;
 
     gettimeofday (& timeVal, NULL);
-    
+
     timeBase = timeVal.tv_sec * 1000 + timeVal.tv_usec / 1000 - newTimeBase;
 }
 
@@ -159,7 +159,7 @@ enet_socket_create (ENetSocketType type, const ENetAddress * address)
     sin.sin_port = ENET_HOST_TO_NET_16 (address -> port);
     sin.sin_addr.s_addr = address -> host;
 
-    if (bind (newSocket, 
+    if (bind (newSocket,
               (struct sockaddr *) & sin,
               sizeof (struct sockaddr_in)) == -1 ||
         (type == ENET_SOCKET_TYPE_STREAM &&

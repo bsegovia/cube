@@ -61,11 +61,11 @@ void updatemasterserver(int seconds)
 {
     if(seconds>updmaster)       // send alive signal to masterserver every hour of uptime
     {
-		sprintf_sd(path)("%sregister.do?action=add", masterpath);
-		httpgetsend(masterserver, masterbase, path, "cubeserver", "Cube Server");
-		masterrep[0] = 0;
-		masterb.data = masterrep;
-		    masterb.dataLength = MAXTRANS-1;
+        sprintf_sd(path)("%sregister.do?action=add", masterpath);
+        httpgetsend(masterserver, masterbase, path, "cubeserver", "Cube Server");
+        masterrep[0] = 0;
+        masterb.data = masterrep;
+        masterb.dataLength = MAXTRANS-1;
         updmaster = seconds+60*60;
     };
 }; 
@@ -97,8 +97,8 @@ void serverms(int mode, int numplayers, int minremain, char *smapname, int secon
     checkmasterreply();
     updatemasterserver(seconds);
 
-	// reply all server info requests
-	ENetBuffer buf;
+    // reply all server info requests
+    ENetBuffer buf;
     ENetAddress addr;
     uchar pong[MAXTRANS], *p;
     int len;
@@ -126,16 +126,16 @@ void serverms(int mode, int numplayers, int minremain, char *smapname, int secon
 
 void servermsinit(const char *master, const char *sdesc, bool listen)
 {
-	const char *mid = strstr(master, "/");
+    const char *mid = strstr(master, "/");
     if(!mid) mid = master;
     strcpy_s(masterpath, mid);
     strn0cpy(masterbase, master, mid-master+1);
     strcpy_s(serverdesc, sdesc);
 
-	if(listen)
-	{
+    if(listen)
+    {
         ENetAddress address = { ENET_HOST_ANY, CUBE_SERVINFO_PORT };
         pongsock = enet_socket_create(ENET_SOCKET_TYPE_DATAGRAM, &address);
         if(pongsock == ENET_SOCKET_NULL) fatal("could not create server info socket\n");
-	};
+    };
 };

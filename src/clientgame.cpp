@@ -48,7 +48,7 @@ void spawnstate(dynent *d)              // reset player state not persistent acc
     d->quadmillis = 0;
     d->lastattackgun = d->gunselect = GUN_SG;
     d->gunwait = 0;
-	d->attacking = false;
+    d->attacking = false;
     d->lastaction = 0;
     loopi(NUMGUNS) d->ammo[i] = 0;
     d->ammo[GUN_FIST] = 1;
@@ -124,8 +124,8 @@ dynent *newdynent()                 // create a new blank player or monster
 
 void respawnself()
 {
-	spawnplayer(player1);
-	showscores(false);
+    spawnplayer(player1);
+    showscores(false);
 };
 
 void arenacount(dynent *d, int &alive, int &dead, char *&lastteam, bool &oneteam)
@@ -205,8 +205,8 @@ void respawn()
         player1->attacking = false;
         if(m_arena) { conoutf("waiting for new round to start..."); return; };
         if(m_sp) { nextmode = gamemode; changemap(clientmap); return; };    // if we die in SP we try the same map again
-		respawnself();
-	};
+        respawnself();
+    };
 };
 
 int sleepwait = 0;
@@ -222,7 +222,7 @@ void updateworld(int millis)        // main game update loop
         if(sleepwait && lastmillis>sleepwait) { sleepwait = 0; execute(sleepcmd); };
         physicsframe();
         checkquad(curtime);
-		if(m_arena) arenarespawn();
+        if(m_arena) arenarespawn();
         moveprojectiles((float)curtime);
         demoplaybackstep();
         if(!demoplayback)
@@ -236,11 +236,11 @@ void updateworld(int millis)        // main game update loop
             monsterthink();
             if(player1->state==CS_DEAD)
             {
-				if(lastmillis-player1->lastaction<2000)
-				{
-					player1->move = player1->strafe = 0;
-					moveplayer(player1, 10, false);
-				}
+                if(lastmillis-player1->lastaction<2000)
+                {
+                    player1->move = player1->strafe = 0;
+                    moveplayer(player1, 10, false);
+                }
                 else if(!m_arena && !m_sp && lastmillis-player1->lastaction>10000) respawn();
             }
             else if(!intermission)
@@ -337,7 +337,7 @@ void mousemove(int dx, int dy)
     const float SENSF = 33.0f;     // try match quake sens
     player1->yaw += (dx/SENSF)*(sensitivity/(float)sensitivityscale);
     player1->pitch -= (dy/SENSF)*(sensitivity/(float)sensitivityscale)*(invmouse ? -1 : 1);
-	fixplayer1range();
+    fixplayer1range();
 };
 
 // damage arriving from the network, monsters, yourself, all ends up here.
@@ -346,7 +346,7 @@ void selfdamage(int damage, int actor, dynent *act)
 {
     if(player1->state!=CS_ALIVE || editmode || intermission) return;
     damageblend(damage);
-	demoblend(damage);
+    demoblend(damage);
     int ad = damage*(player1->armourtype+1)*20/100;     // let armour absorb when possible
     if(ad>player1->armour) ad = player1->armour;
     player1->armour -= ad;

@@ -1,4 +1,4 @@
-/** 
+/**
  @file  peer.c
  @brief ENet peer management functions
 */
@@ -6,35 +6,37 @@
 #include "enet/enet.h"
 #include <string.h>
 
-/** @defgroup peer ENet peer functions 
+/** @defgroup peer ENet peer functions
     @{
 */
 
 /** Configures throttle parameter for a peer.
 
     Unreliable packets are dropped by ENet in response to the varying conditions
-    of the Internet connection to the peer.  The throttle represents a probability
-    that an unreliable packet should not be dropped and thus sent by ENet to the peer.
-    The lowest mean round trip time from the sending of a reliable packet to the
-    receipt of its acknowledgement is measured over an amount of time specified by
-    the interval parameter in milliseconds.  If a measured round trip time happens to
-    be significantly less than the mean round trip time measured over the interval, 
-    then the throttle probability is increased to allow more traffic by an amount
-    specified in the acceleration parameter, which is a ratio to the ENET_PEER_PACKET_THROTTLE_SCALE
-    constant.  If a measured round trip time happens to be significantly greater than
-    the mean round trip time measured over the interval, then the throttle probability
-    is decreased to limit traffic by an amount specified in the deceleration parameter, which
-    is a ratio to the ENET_PEER_PACKET_THROTTLE_SCALE constant.  When the throttle has
-    a value of ENET_PEER_PACKET_THROTTLE_SCALE, on unreliable packets are dropped by 
-    ENet, and so 100% of all unreliable packets will be sent.  When the throttle has a
-    value of 0, all unreliable packets are dropped by ENet, and so 0% of all unreliable
-    packets will be sent.  Intermediate values for the throttle represent intermediate
-    probabilities between 0% and 100% of unreliable packets being sent.  The bandwidth
-    limits of the local and foreign hosts are taken into account to determine a 
-    sensible limit for the throttle probability above which it should not raise even in
-    the best of conditions.
+    of the Internet connection to the peer.  The throttle represents a
+    probability that an unreliable packet should not be dropped and thus sent by
+    ENet to the peer.  The lowest mean round trip time from the sending of a
+    reliable packet to the receipt of its acknowledgement is measured over an
+    amount of time specified by the interval parameter in milliseconds.  If a
+    measured round trip time happens to be significantly less than the mean
+    round trip time measured over the interval, then the throttle probability is
+    increased to allow more traffic by an amount specified in the acceleration
+    parameter, which is a ratio to the ENET_PEER_PACKET_THROTTLE_SCALE constant.
+    If a measured round trip time happens to be significantly greater than the
+    mean round trip time measured over the interval, then the throttle
+    probability is decreased to limit traffic by an amount specified in the
+    deceleration parameter, which is a ratio to the
+    ENET_PEER_PACKET_THROTTLE_SCALE constant.  When the throttle has a value of
+    ENET_PEER_PACKET_THROTTLE_SCALE, on unreliable packets are dropped by ENet,
+    and so 100% of all unreliable packets will be sent.  When the throttle has a
+    value of 0, all unreliable packets are dropped by ENet, and so 0% of all
+    unreliable packets will be sent.  Intermediate values for the throttle
+    represent intermediate probabilities between 0% and 100% of unreliable
+    packets being sent.  The bandwidth limits of the local and foreign hosts are
+    taken into account to determine a sensible limit for the throttle
+    probability above which it should not raise even in the best of conditions.
 
-    @param peer peer to configure 
+    @param peer peer to configure
     @param interval interval, in milliseconds, over which to measure lowest mean RTT; the default value is ENET_PEER_PACKET_THROTTLE_INTERVAL.
     @param acceleration rate at which to increase the throttle probability as mean RTT declines
     @param deceleration rate at which to decrease the throttle probability as mean RTT increases
@@ -382,13 +384,13 @@ enet_peer_reset (ENetPeer * peer)
     peer -> outgoingUnsequencedGroup = 0;
 
     memset (peer -> unsequencedWindow, 0, sizeof (peer -> unsequencedWindow));
-    
+
     enet_peer_reset_queues (peer);
 }
 
 /** Sends a ping request to a peer.
     @param peer destination for the ping request
-    @remarks ping requests factor into the mean round trip time as designated by the 
+    @remarks ping requests factor into the mean round trip time as designated by the
     roundTripTime field in the ENetPeer structure.  Enet automatically pings all connected
     peers at regular intervals, however, this function may be called to ensure more
     frequent ping requests.
@@ -405,7 +407,7 @@ enet_peer_ping (ENetPeer * peer)
     command.header.channelID = 0xFF;
     command.header.flags = ENET_PROTOCOL_FLAG_ACKNOWLEDGE;
     command.header.commandLength = sizeof (ENetProtocolPing);
-   
+
     enet_peer_queue_outgoing_command (peer, & command, NULL, 0, 0);
 }
 
@@ -465,7 +467,7 @@ enet_peer_disconnect (ENetPeer * peer)
 
     if (peer -> state == ENET_PEER_STATE_CONNECTED)
       command.header.flags = ENET_PROTOCOL_FLAG_ACKNOWLEDGE;
-    
+
     enet_peer_queue_outgoing_command (peer, & command, NULL, 0, 0);
 
     if (peer -> state == ENET_PEER_STATE_CONNECTED)
@@ -488,9 +490,9 @@ enet_peer_queue_acknowledgement (ENetPeer * peer, const ENetProtocol * command, 
 
     acknowledgement -> sentTime = sentTime;
     acknowledgement -> command = * command;
-    
+
     enet_list_insert (enet_list_end (& peer -> acknowledgements), acknowledgement);
-    
+
     return acknowledgement;
 }
 
@@ -515,7 +517,7 @@ enet_peer_queue_outgoing_command (ENetPeer * peer, const ENetProtocol * command,
     if (command -> header.flags & ENET_PROTOCOL_FLAG_ACKNOWLEDGE)
     {
        ++ channel -> outgoingReliableSequenceNumber;
-       
+
        outgoingCommand -> reliableSequenceNumber = channel -> outgoingReliableSequenceNumber;
        outgoingCommand -> unreliableSequenceNumber = 0;
     }
@@ -530,11 +532,11 @@ enet_peer_queue_outgoing_command (ENetPeer * peer, const ENetProtocol * command,
     else
     {
        ++ channel -> outgoingUnreliableSequenceNumber;
-        
+
        outgoingCommand -> reliableSequenceNumber = channel -> outgoingReliableSequenceNumber;
        outgoingCommand -> unreliableSequenceNumber = channel -> outgoingUnreliableSequenceNumber;
     }
-   
+
     outgoingCommand -> sentTime = 0;
     outgoingCommand -> roundTripTimeout = 0;
     outgoingCommand -> roundTripTimeoutLimit = 0;
@@ -625,9 +627,9 @@ enet_peer_queue_incoming_command (ENetPeer * peer, const ENetProtocol * command,
     incomingCommand -> fragmentsRemaining = fragmentCount;
     incomingCommand -> packet = packet;
     incomingCommand -> fragments = NULL;
-    
+
     if (fragmentCount > 0)
-    { 
+    {
        incomingCommand -> fragments = (enet_uint32 *) enet_malloc ((fragmentCount + 31) / 32 * sizeof (enet_uint32));
        memset (incomingCommand -> fragments, 0, (fragmentCount + 31) / 32 * sizeof (enet_uint32));
     }

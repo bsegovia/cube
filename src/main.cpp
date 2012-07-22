@@ -4,7 +4,7 @@
 
 void cleanup(char *msg)         // single program exit point;
 {
-	stop();
+    stop();
     disconnect(true);
     writecfg();
     cleangl();
@@ -23,7 +23,7 @@ void cleanup(char *msg)         // single program exit point;
     exit(1);
 };
 
-void quit()                     // normal exit
+void quit() // normal exit
 {
     writeservercfg();
     cleanup(NULL);
@@ -35,7 +35,7 @@ void fatal(const char *s, const char *o)    // failure exit
     cleanup(msg);
 };
 
-void *alloc(int s)              // for some big chunks... most other allocs use the memory pool
+void *alloc(int s) // for some big chunks... most other allocs use the memory pool
 {
     void *b = calloc(1,s);
     if(!b) fatal("out of memory!");
@@ -80,6 +80,7 @@ void keyrepeat(bool on)
 
 VARF(gamespeed, 10, 100, 1000, if(multiplayer()) gamespeed = 100);
 VARP(minmillis, 0, 5, 1000);
+VARF(grabmouse, 0, 1, 1, {SDL_WM_GrabInput(grabmouse ? SDL_GRAB_ON : SDL_GRAB_OFF);});
 
 int islittleendian = 1;
 int framesinmap = 0;
@@ -157,7 +158,8 @@ int main(int argc, char **argv)
        !installtex(9,  path(newstring("data/martin/ball3.png")), xs, ys) ||
        !installtex(4,  path(newstring("data/explosion.jpg")), xs, ys) ||
        !installtex(5,  path(newstring("data/items.png")), xs, ys) ||
-       !installtex(1,  path(newstring("data/crosshair.png")), xs, ys)) fatal("could not find core textures (hint: run cube from the parent of the bin directory)");
+       !installtex(1,  path(newstring("data/crosshair.png")), xs, ys))
+        fatal("could not find core textures (hint: run cube from the parent of the bin directory)");
 
     log("sound");
     initsound();
@@ -175,7 +177,7 @@ int main(int argc, char **argv)
 
     log("localconnect");
     localconnect();
-    changemap("metl3");		// if this map is changed, also change depthcorrect()
+    changemap("metl3");        // if this map is changed, also change depthcorrect()
 
     log("mainloop");
     int ignore = 5;
@@ -194,11 +196,11 @@ int main(int argc, char **argv)
         readdepth(scr_w, scr_h);
         SDL_GL_SwapBuffers();
         extern void updatevol(); updatevol();
-        if(framesinmap++<5)	// cheap hack to get rid of initial sparklies, even when triple buffering etc.
+        if(framesinmap++<5)    // cheap hack to get rid of initial sparklies, even when triple buffering etc.
         {
-          player1->yaw += 5;
-          gl_drawframe(scr_w, scr_h, fps);
-          player1->yaw -= 5;
+            player1->yaw += 5;
+            gl_drawframe(scr_w, scr_h, fps);
+            player1->yaw -= 5;
         };
         gl_drawframe(scr_w, scr_h, fps);
         SDL_Event event;
@@ -228,9 +230,9 @@ int main(int argc, char **argv)
                     lasttype = event.type;
                     lastbut = event.button.button;
                     break;
-            };
+            }
         };
-    };
+    }
     quit();
     return 1;
 };

@@ -46,8 +46,7 @@ typedef unsigned int uint;
 #define loopl(m) loop(l,m)
 
 #ifdef WIN32
-#pragma warning( 3 : 4189 ) 
-//#pragma comment(linker,"/OPT:NOWIN98")
+#pragma warning( 3 : 4189 )
 #define PATHDIV '\\'
 #else
 #define __cdecl
@@ -55,11 +54,10 @@ typedef unsigned int uint;
 #define PATHDIV '/'
 #endif
 
-
 // easy safe strings
 
 #define _MAXDEFSTR 260
-typedef char string[_MAXDEFSTR]; 
+typedef char string[_MAXDEFSTR];
 
 inline void strn0cpy(char *d, const char *s, size_t m) { strncpy(d,s,m); d[(m)-1] = 0; };
 inline void strcpy_s(char *d, const char *s) { strn0cpy(d,s,_MAXDEFSTR); };
@@ -69,7 +67,7 @@ inline void formatstring(char *d, const char *fmt, va_list v)
 {
     _vsnprintf(d, _MAXDEFSTR, fmt, v);
     d[_MAXDEFSTR-1] = 0;
-};
+}
 
 struct sprintf_s_f
 {
@@ -90,32 +88,14 @@ struct sprintf_s_f
 #define sprintf_sdlv(d,last,fmt) string d; { va_list ap; va_start(ap, last); formatstring(d, fmt, ap); va_end(ap); }
 #define sprintf_sdv(d,fmt) sprintf_sdlv(d,fmt,fmt)
 
-
-// fast pentium f2i
-
-#ifdef _MSC_VER
-inline int fast_f2nat(float a) {        // only for positive floats
-    static const float fhalf = 0.5f;
-    int retval;
-    
-    __asm fld a
-    __asm fsub fhalf
-    __asm fistp retval      // perf regalloc?
-
-    return retval;
-};
-#else
-#define fast_f2nat(val) ((int)(val)) 
-#endif
-
-
+#define fast_f2nat(val) ((int)(val))
 
 extern char *path(char *s);
 extern char *loadfile(char *fn, int *size);
 extern void endianswap(void *, int, int);
 
 // memory pool that uses buckets and linear allocation for small objects
-// VERY fast, and reasonably good memory reuse 
+// VERY fast, and reasonably good memory reuse
 
 struct pool
 {
@@ -140,14 +120,14 @@ struct pool
 
     char *string(const char *s, size_t l);
     char *string(const char *s) { return string(s, strlen(s)); };
-    void deallocstr(char *s) { dealloc(s, strlen(s)+1); }; 
-    char *stringbuf(const char *s) { return string(s, _MAXDEFSTR-1); }; 
+    void deallocstr(char *s) { dealloc(s, strlen(s)+1); };
+    char *stringbuf(const char *s) { return string(s, _MAXDEFSTR-1); };
 
     void dealloc_block(void *b);
     void allocnext(size_t allocsize);
 };
 
-pool *gp(); 
+pool *gp();
 
 template <class T> struct vector
 {
@@ -163,9 +143,9 @@ template <class T> struct vector
         buf = (T *)p->alloc(alen*sizeof(T));
         ulen = 0;
     };
-    
+
     ~vector() { setsize(0); p->dealloc(buf, alen*sizeof(T)); };
-    
+
     vector(vector<T> &v);
     void operator=(vector<T> &v);
 
@@ -191,7 +171,7 @@ template <class T> struct vector
     T &operator[](int i) { assert(i>=0 && i<ulen); return buf[i]; };
     void setsize(int i) { for(; ulen>i; ulen--) buf[ulen-1].~T(); };
     T *getbuf() { return buf; };
-    
+
     void sort(void *cf) { qsort(buf, ulen, sizeof(T), (int (__cdecl *)(const void *,const void *))cf); };
 
     void realloc()
@@ -217,7 +197,7 @@ template <class T> struct vector
     };
 };
 
-#define loopv(v)    if(false) {} else for(int i = 0; i<(v).length(); i++)    
+#define loopv(v)    if(false) {} else for(int i = 0; i<(v).length(); i++)
 #define loopvrev(v) if(false) {} else for(int i = (v).length()-1; i>=0; i--)
 
 template <class T> struct hashtable
@@ -245,17 +225,17 @@ template <class T> struct hashtable
     T *access(const char *key, T *data = NULL)
     {
         unsigned int h = 5381;
-        for(int i = 0, k; (k = key[i]) != 0; i++) h = ((h<<5)+h)^k;    // bernstein k=33 xor
-        h = h&(size-1);                                         // primes not much of an advantage
+        for(int i = 0, k; (k = key[i]) != 0; i++) h = ((h<<5)+h)^k; // bernstein k=33 xor
+        h = h&(size-1); // primes not much of an advantage
         for(chain *c = table[h]; c; c = c->next)
         {
           char ch = 0;
-            for(const char *p1 = key, *p2 = c->key; (ch = *p1++)==*p2++; ) if(!ch)    //if(strcmp(key,c->key)==0)
-            {
-                T *d = &c->data;
-                if(data) c->data = *data;
-                return d;
-            };
+          for(const char *p1 = key, *p2 = c->key; (ch = *p1++)==*p2++; ) if(!ch)
+          {
+            T *d = &c->data;
+            if(data) c->data = *data;
+            return d;
+          };
         };
         if(data)
         {
@@ -270,12 +250,11 @@ template <class T> struct hashtable
     };
 };
 
-
 #define enumerate(ht,t,e,b) loopi(ht->size) for(ht->enumc = ht->table[i]; ht->enumc; ht->enumc = ht->enumc->next) { t e = &ht->enumc->data; b; }
 
-inline char *newstring(const char *s)        { return gp()->string(s);    };
+inline char *newstring(const char *s)           { return gp()->string(s);    };
 inline char *newstring(const char *s, size_t l) { return gp()->string(s, l); };
-inline char *newstringbuf(const char *s)     { return gp()->stringbuf(s); };
+inline char *newstringbuf(const char *s)        { return gp()->stringbuf(s); };
 
-#endif
+#endif /* _TOOLS_H */
 
