@@ -3,7 +3,7 @@
 
 #include "cube.h"
 
-bool editmode = false; 
+bool editmode = false;
 
 // the current selection, used by almost all editing commands invariant: all
 // code assumes that these are kept inside MINBORD distance of the edge of the
@@ -183,10 +183,10 @@ void cursorupdate()                                     // called every frame fr
   };
 };
 
-vector<block *> undos;                                  // unlimited undo
-VARP(undomegs, 0, 1, 10);                                // bounded by n megs
+vector<block *> undos;                 // unlimited undo
+VARP(undomegs, 0, 1, 10);              // bounded by n megs
 
-void pruneundos(int maxremain)                          // bound memory
+void pruneundos(int maxremain)         // bound memory
 {
   int t = 0;
   loopvrev(undos)
@@ -211,7 +211,7 @@ void editundo()
   free(p);
 };
 
-block *copybuf = NULL;
+static block *copybuf = NULL;
 
 void copy()
 {
@@ -291,7 +291,7 @@ void editheight(int flr, int amount)
 
 COMMAND(editheight, ARG_2INT);
 
-void edittexxy(int type, int t, block &sel)            
+void edittexxy(int type, int t, block &sel)
 {
   loopselxy(switch(type)
       {
@@ -330,7 +330,7 @@ void replace()
       case 3: if(s->utex == rtex.utex) s->utex = lasttex; break;
     };
   };
-  block b = { 0, 0, ssize, ssize }; 
+  block b = { 0, 0, ssize, ssize };
   remip(b);
 };
 
@@ -342,7 +342,7 @@ void edittypexy(int type, block &sel)
 void edittype(int type)
 {
   EDITSEL;
-  if(type==CORNER && (sel.xs!=sel.ys || sel.xs==3 || sel.xs>4) && 
+  if(type==CORNER && (sel.xs!=sel.ys || sel.xs==3 || sel.xs>4) &&
       (sel.xs!=8 || sel.x&~-sel.xs || sel.y&~-sel.ys))
   { conoutf("corner selection must be power of 2 aligned"); return; };
   edittypexy(type, sel);
@@ -385,7 +385,7 @@ COMMAND(equalize, ARG_1INT);
 void setvdeltaxy(int delta, block &sel)
 {
   loopselxy(s->vdelta = max(s->vdelta+delta, 0));
-  remipmore(sel);    
+  remipmore(sel);
 };
 
 void setvdelta(int delta)

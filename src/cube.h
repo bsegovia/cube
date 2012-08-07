@@ -203,7 +203,6 @@ extern int gamemode, nextmode;
 extern int xtraverts;
 extern bool demoplayback;
 
-
 #define DMF 16.0f
 #define DAF 1.0f
 #define DVF 100.0f
