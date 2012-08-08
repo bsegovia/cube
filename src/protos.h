@@ -185,10 +185,11 @@ extern void setentphysics(int mml, int mmr);
 extern void physicsframe();
 
 // sound
-extern void playsound(int n, vec *loc = 0);
-extern void playsoundc(int n);
-extern void initsound();
-extern void cleansound();
+extern void sound_play(int n, const vec *loc = 0);
+extern void sound_playc(int n);
+extern void sound_init(void);
+extern void sound_clean(void);
+extern void sound_updatevol(void);
 
 // rendermd2
 extern void rendermodel(const char *mdl, int frame, int range, int tex, float rad, float x, float y, float z, float yaw, float pitch, bool teammate, float scale, float speed, int snap = 0, int basetime = 0);

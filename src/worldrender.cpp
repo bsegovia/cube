@@ -288,3 +288,4 @@ void render_world(float vx, float vy, float vh, int yaw, int pitch, float fov, i
     mipstats(stats[0], stats[1], stats[2]);
 };
 
+

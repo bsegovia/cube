@@ -387,13 +387,13 @@ void selfdamage(int damage, int actor, dynent *act)
         player1->state = CS_DEAD;
         player1->pitch = 0;
         player1->roll = 60;
-        playsound(S_DIE1+rnd(2));
+        sound_play(S_DIE1+rnd(2));
         spawnstate(player1);
         player1->lastaction = lastmillis;
     }
     else
     {
-        playsound(S_PAIN6);
+        sound_play(S_PAIN6);
     };
 };
 
@@ -453,3 +453,4 @@ void startmap(const char *name)   // called just after a map load
 }; 
 
 COMMANDN(map, changemap, ARG_1STR);
+

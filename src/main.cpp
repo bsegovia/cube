@@ -8,7 +8,7 @@ void cleanup(char *msg)         // single program exit point;
     disconnect(true);
     writecfg();
     cleangl();
-    cleansound();
+    sound_clean();
     cleanupserver();
     SDL_ShowCursor(1);
     if(msg)
@@ -142,7 +142,7 @@ int main(int argc, char **argv)
     log("video: misc");
     SDL_WM_SetCaption("cube engine", NULL);
     SDL_WM_GrabInput(SDL_GRAB_ON);
-    keyrepeat(false);
+    keyrepeat(true);
     SDL_ShowCursor(0);
 
     log("gl");
@@ -162,7 +162,7 @@ int main(int argc, char **argv)
         fatal("could not find core textures (hint: run cube from the parent of the bin directory)");
 
     log("sound");
-    initsound();
+    sound_init();
 
     log("cfg");
     newmenu("frags\tpj\tping\tteam\tname");
@@ -195,7 +195,7 @@ int main(int argc, char **argv)
         computeraytable(player1->o.x, player1->o.y);
         readdepth(scr_w, scr_h);
         SDL_GL_SwapBuffers();
-        extern void updatevol(); updatevol();
+        sound_updatevol();
         if(framesinmap++<5)    // cheap hack to get rid of initial sparklies, even when triple buffering etc.
         {
             player1->yaw += 5;
@@ -236,5 +236,4 @@ int main(int argc, char **argv)
     quit();
     return 1;
 };
-
 

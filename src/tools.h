@@ -252,9 +252,9 @@ template <class T> struct hashtable
 
 #define enumerate(ht,t,e,b) loopi(ht->size) for(ht->enumc = ht->table[i]; ht->enumc; ht->enumc = ht->enumc->next) { t e = &ht->enumc->data; b; }
 
-inline char *newstring(const char *s)           { return gp()->string(s);    };
-inline char *newstring(const char *s, size_t l) { return gp()->string(s, l); };
-inline char *newstringbuf(const char *s)        { return gp()->stringbuf(s); };
+inline char *newstring(const char *s)           { return gp()->string(s); }
+inline char *newstring(const char *s, size_t l) { return gp()->string(s, l); }
+inline char *newstringbuf(const char *s)        { return gp()->stringbuf(s); }
 
 #endif /* _TOOLS_H */
 

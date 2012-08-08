@@ -369,3 +369,4 @@ void gl_drawhud(int w, int h, int curfps, int nquads, int curvert, bool underwat
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_DEPTH_TEST);
 };
+

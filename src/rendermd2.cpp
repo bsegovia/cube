@@ -273,3 +273,4 @@ void rendermodel(const char *mdl, int frame, int range, int tex, float rad, floa
 
     m->render(light, frame, range, x, y, z, yaw, pitch, scale, speed, snap, basetime);
 };
+

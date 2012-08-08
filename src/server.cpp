@@ -467,3 +467,4 @@ void initserver(bool dedicated, int uprate, const char *sdesc, const char *ip, c
         for(;;) serverslice(/*enet_time_get_sec()*/time(NULL), 5);
     };
 };
+

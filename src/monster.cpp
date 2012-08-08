@@ -211,7 +211,7 @@ void monsteraction(dynent *m)           // main AI thinking routine, called ever
             || angle<10)
             {
                 transition(m, M_HOME, 1, 500, 200);
-                playsound(S_GRUNT1+rnd(2), &m->o);
+                sound_play(S_GRUNT1+rnd(2), &m->o);
             };
             break;
         };
@@ -277,13 +277,13 @@ void monsterpain(dynent *m, int damage, dynent *d)
         m->lastaction = lastmillis;
         numkilled++;
         player1->frags = numkilled;
-        playsound(monstertypes[m->mtype].diesound, &m->o);
+        sound_play(monstertypes[m->mtype].diesound, &m->o);
         int remain = monstertotal-numkilled;
         if(remain>0 && remain<=5) conoutf("only %d monster(s) remaining", remain);
     }
     else
     {
-        playsound(monstertypes[m->mtype].painsound, &m->o);
+        sound_play(monstertypes[m->mtype].painsound, &m->o);
     };
 };
 
@@ -336,3 +336,4 @@ void monsterrender()
 {
     loopv(monsters) renderclient(monsters[i], false, monstertypes[monsters[i]->mtype].mdlname, monsters[i]->mtype==5, monstertypes[monsters[i]->mtype].mscale/10.0f);
 };
+

@@ -8,8 +8,8 @@ VAR(lightscale,1,4,100);
 
 void lightray(float bx, float by, persistent_entity &light)     // done in realtime, needs to be fast
 {
-    float lx = light.x+(rnd(21)-10)*0.1f;
-    float ly = light.y+(rnd(21)-10)*0.1f;
+    float lx = light.x;//+(rnd(21)-10)*0.1f;
+    float ly = light.y;//+(rnd(21)-10)*0.1f;
     float dx = bx-lx;
     float dy = by-ly; 
     float dist = (float)sqrt(dx*dx+dy*dy);
@@ -110,7 +110,6 @@ void calclightsource(persistent_entity &l)
     int ex = l.x+reach;
     int sy = l.y-reach;
     int ey = l.y+reach;
-    
     rndreset();
     
     const float s = 0.8f;
@@ -210,5 +209,6 @@ void blockpaste(block &b)
     for(int x = b.x; x<b.xs+b.x; x++) for(int y = b.y; y<b.ys+b.y; y++) *S(x,y) = *q++;
     remipmore(b);
 };
+
 
 

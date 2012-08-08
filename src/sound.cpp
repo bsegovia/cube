@@ -1,20 +1,25 @@
 #include "cube.h"
-
-VARP(soundvol, 0, 255, 255);
-VARP(musicvol, 0, 128, 255);
-static bool nosound = false;
+#include "SDL/SDL_mixer.h"
 
 #define MAXCHAN 32
 #define SOUNDFREQ 22050
+#define MAXVOL MIX_MAX_VOLUME
+
+VARP(soundvol, 0, 255, 255);
+VARP(musicvol, 0, 128, 255);
+VAR(soundbufferlen, 128, 1024, 4096);
+VAR(stereo, 0, 1, 1);
+
+static bool nosound = false;
+static Mix_Music *mod = NULL;
+static void *stream = NULL;
+static vector<Mix_Chunk *> samples;
+static cvector snames;
+static int soundsatonce = 0, lastsoundmillis = 0;
 
 struct soundloc { vec loc; bool inuse; } soundlocs[MAXCHAN];
 
-#include "SDL/SDL_mixer.h"
-#define MAXVOL MIX_MAX_VOLUME
-static Mix_Music *mod = NULL;
-static void *stream = NULL;
-
-void stopsound()
+void sound_stop(void)
 {
   if (nosound) return;
   if (mod) {
@@ -25,11 +30,9 @@ void stopsound()
   if (stream) stream = NULL;
 }
 
-VAR(soundbufferlen, 128, 1024, 4096);
-
-void initsound()
+void sound_init(void)
 {
-  memset(soundlocs, 0, sizeof(soundloc)*MAXCHAN);
+  memset(soundlocs, 0, sizeof(soundlocs));
   if (Mix_OpenAudio(SOUNDFREQ, MIX_DEFAULT_FORMAT, 2, soundbufferlen) < 0) {
     conoutf("sound init failed (SDL_mixer): %s", (size_t)Mix_GetError());
     nosound = true;
@@ -37,10 +40,10 @@ void initsound()
   Mix_AllocateChannels(MAXCHAN);
 }
 
-static void music(char *name)
+static void music(const char *name)
 {
   if (nosound) return;
-  stopsound();
+  sound_stop();
   if (soundvol && musicvol) {
     string sn;
     strcpy_s(sn, "packages/");
@@ -52,12 +55,7 @@ static void music(char *name)
   }
 }
 
-COMMAND(music, ARG_1STR);
-
-static vector<Mix_Chunk *> samples;
-static cvector snames;
-
-static int registersound(char *name)
+static int registersound(const char *name)
 {
   loopv(snames) if (strcmp(snames[i], name)==0) return i;
   snames.add(newstring(name));
@@ -65,18 +63,14 @@ static int registersound(char *name)
   return samples.length()-1;
 }
 
-COMMAND(registersound, ARG_1EST);
-
-void cleansound()
+void sound_clean(void)
 {
   if (nosound) return;
-  stopsound();
+  sound_stop();
   Mix_CloseAudio();
 }
 
-VAR(stereo, 0, 1, 1);
-
-static void updatechanvol(int chan, vec *loc)
+static void sound_updatechanvol(int chan, const vec *loc)
 {
   int vol = soundvol, pan = 255/2;
   if (loc) {
@@ -84,7 +78,7 @@ static void updatechanvol(int chan, vec *loc)
     vol -= (int)(dist*3*soundvol/255);  // simple mono distance attenuation
     if (stereo && (v.x != 0 || v.y != 0)) {
       // relative angle of sound along X-Y axis
-      float yaw = -atan2(v.x, v.y) - player1->yaw*(PI / 180.0f);
+      const float yaw = -atan2(v.x, v.y) - player1->yaw*(PI / 180.0f);
       // range is from 0 (left) to 255 (right)
       pan = int(255.9f*(0.5*sin(yaw)+0.5f));
     }
@@ -94,30 +88,28 @@ static void updatechanvol(int chan, vec *loc)
   Mix_SetPanning(chan, 255-pan, pan);
 }
 
-static void newsoundloc(int chan, vec *loc)
+static void sound_newsoundloc(int chan, const vec *loc)
 {
   assert(chan>=0 && chan<MAXCHAN);
   soundlocs[chan].loc = *loc;
   soundlocs[chan].inuse = true;
 }
 
-void updatevol()
+void sound_updatevol(void)
 {
   if (nosound) return;
   loopi(MAXCHAN)
     if (soundlocs[i].inuse) {
       if (Mix_Playing(i))
-        updatechanvol(i, &soundlocs[i].loc);
+        sound_updatechanvol(i, &soundlocs[i].loc);
       else
         soundlocs[i].inuse = false;
     }
 }
 
-void playsoundc(int n) { addmsg(0, 2, SV_SOUND, n); playsound(n); }
+void sound_playc(int n) { addmsg(0, 2, SV_SOUND, n); sound_play(n); }
 
-static int soundsatonce = 0, lastsoundmillis = 0;
-
-void playsound(int n, vec *loc)
+void sound_play(int n, const vec *loc)
 {
   if (nosound) return;
   if (!soundvol) return;
@@ -140,10 +132,13 @@ void playsound(int n, vec *loc)
 
   const int chan = Mix_PlayChannel(-1, samples[n], 0);
   if (chan<0) return;
-  if (loc) newsoundloc(chan, loc);
-  updatechanvol(chan, loc);
+  if (loc) sound_newsoundloc(chan, loc);
+  sound_updatechanvol(chan, loc);
 }
 
-static void sound(int n) { playsound(n, NULL); }
+static void sound(int n) { sound_play(n, NULL); }
+
+COMMAND(music, ARG_1STR);
+COMMAND(registersound, ARG_1EST);
 COMMAND(sound, ARG_1INT);
 

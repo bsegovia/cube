@@ -43,7 +43,7 @@ void trigger(int tag, int type, bool savegame)
 {
     if(!tag) return;
     settag(tag, type);
-    if(!savegame && type!=3) playsound(S_RUMBLE);
+    if(!savegame && type!=3) sound_play(S_RUMBLE);
     sprintf_sd(aliasname)("level_trigger_%d", tag);
     if(identexists(aliasname)) execute(aliasname);
     if(type==2) endsp(false);
@@ -370,4 +370,5 @@ COMMAND(newmap, ARG_1INT);
 COMMANDN(recalc, calclight, ARG_NONE);
 COMMAND(delent, ARG_NONE);
 COMMAND(entproperty, ARG_2INT);
+
 

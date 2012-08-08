@@ -220,3 +220,4 @@ void draw_envbox(int t, int w)
 
     glDepthMask(GL_TRUE);
 }
+

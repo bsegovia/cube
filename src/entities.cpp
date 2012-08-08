@@ -80,7 +80,7 @@ void radditem(int i, int &v)
   ents[i].spawned = false;
   v += is.add;
   if(v>is.max) v = is.max;
-  playsoundc(is.sound);
+  sound_playc(is.sound);
 };
 
 void realpickup(int n, dynent *d)
@@ -136,7 +136,7 @@ void teleport(int n, dynent *d)     // also used by monsters
       d->pitch = 0;
       d->vel.x = d->vel.y = d->vel.z = 0;
       entinmap(d);
-      playsoundc(S_TELEPORT);
+      sound_playc(S_TELEPORT);
       break;
     };
   };
@@ -194,7 +194,7 @@ void pickup(int n, dynent *d)
                       vec v = { (int)(char)ents[n].attr3/10.0f, (int)(char)ents[n].attr2/10.0f, ents[n].attr1/10.0f };
                       player1->vel.z = 0;
                       vadd(player1->vel, v);
-                      playsoundc(S_JUMPPAD);
+                      sound_playc(S_JUMPPAD);
                       break;
                     };
   };
@@ -220,7 +220,7 @@ void checkquad(int time)
   if(player1->quadmillis && (player1->quadmillis -= time)<0)
   {
     player1->quadmillis = 0;
-    playsoundc(S_PUPOUT);
+    sound_playc(S_PUPOUT);
     conoutf("quad damage is over");
   };
 };
@@ -236,4 +236,5 @@ void putitems(uchar *&p)            // puts items in network stream and also spa
 
 void resetspawns() { loopv(ents) ents[i].spawned = false; };
 void setspawn(uint i, bool on) { if(i<(uint)ents.length()) ents[i].spawned = on; };
+
 

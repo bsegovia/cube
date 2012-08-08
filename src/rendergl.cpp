@@ -396,3 +396,4 @@ void gl_drawframe(int w, int h, float curfps)
     glEnable(GL_FOG);
 };
 
+

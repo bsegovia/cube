@@ -117,7 +117,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
         };
 
         case SV_SOUND:
-            playsound(getint(p), &d->o);
+            sound_play(getint(p), &d->o);
             break;
 
         case SV_TEXT:
@@ -196,7 +196,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
             int damage = getint(p);
             int ls = getint(p);
             if(target==clientnum) { if(ls==player1->lifesequence) selfdamage(damage, cn, d); }
-            else playsound(S_PAIN1+rnd(5), &getclient(target)->o);
+            else sound_play(S_PAIN1+rnd(5), &getclient(target)->o);
             break;
         };
 
@@ -237,7 +237,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
                     };
                 };
             };
-            playsound(S_DIE1+rnd(2), &d->o);
+            sound_play(S_DIE1+rnd(2), &d->o);
             d->lifesequence++;
             break;
         };
@@ -257,7 +257,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
             setspawn(i, true);
             if(i>=(uint)ents.length()) break;
             vec v = { ents[i].x, ents[i].y, ents[i].z };
-            playsound(S_ITEMSPAWN, &v); 
+            sound_play(S_ITEMSPAWN, &v); 
             break;
         };
 
@@ -353,3 +353,4 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
             return;
     };
 };
+

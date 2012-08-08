@@ -159,3 +159,4 @@ void getmap()
 COMMAND(sendmap, ARG_1STR);
 COMMAND(getmap, ARG_NONE);
 
+
