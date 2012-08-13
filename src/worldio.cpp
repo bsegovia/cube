@@ -107,17 +107,17 @@ void writemap(char *mname, int msize, uchar *mdata)
     setnames(mname);
     backup(cgzname, bakname);
     FILE *f = fopen(cgzname, "wb");
-    if(!f) { conoutf("could not write map to %s", cgzname); return; };
+    if(!f) { console::out("could not write map to %s", cgzname); return; };
     fwrite(mdata, 1, msize, f);
     fclose(f);
-    conoutf("wrote map %s as file %s", mname, cgzname);
+    console::out("wrote map %s as file %s", mname, cgzname);
 }
 
 uchar *readmap(char *mname, int *msize)
 {
     setnames(mname);
     uchar *mdata = (uchar *)loadfile(cgzname, msize);
-    if(!mdata) { conoutf("could not read map %s", cgzname); return NULL; };
+    if(!mdata) { console::out("could not read map %s", cgzname); return NULL; };
     return mdata;
 }
 
@@ -134,7 +134,7 @@ void save_world(char *mname)
     setnames(mname);
     backup(cgzname, bakname);
     gzFile f = gzopen(cgzname, "wb9");
-    if(!f) { conoutf("could not write map to %s", cgzname); return; };
+    if(!f) { console::out("could not write map to %s", cgzname); return; };
     hdr.version = MAPVERSION;
     hdr.numents = 0;
     loopv(ents) if(ents[i].type!=NOTUSED) hdr.numents++;
@@ -202,7 +202,7 @@ void save_world(char *mname)
     };
     spurge;
     gzclose(f);
-    conoutf("wrote map file %s", cgzname);
+    console::out("wrote map file %s", cgzname);
     settagareas();
 };
 
@@ -213,7 +213,7 @@ void load_world(char *mname)        // still supports all map formats that have 
     pruneundos();
     setnames(mname);
     gzFile f = gzopen(cgzname, "rb9");
-    if(!f) { conoutf("could not read map %s", cgzname); return; };
+    if(!f) { console::out("could not read map %s", cgzname); return; };
     gzread(f, &hdr, sizeof(header)-sizeof(int)*16);
     endianswap(&hdr.version, sizeof(int), 4);
     if(strncmp(hdr.head, "CUBE", 4)!=0) fatal("while reading map: header malformatted");
@@ -312,8 +312,8 @@ void load_world(char *mname)        // still supports all map formats that have 
     int xs, ys;
     //loopi(256) if(texuse) lookuptexture(i, xs, ys);
     loopi(256) lookuptexture(i, xs, ys);
-    conoutf("read map %s (%d milliseconds)", cgzname, SDL_GetTicks()-lastmillis);
-    conoutf("%s", hdr.maptitle);
+    console::out("read map %s (%d milliseconds)", cgzname, SDL_GetTicks()-lastmillis);
+    console::out("%s", hdr.maptitle);
     startmap(mname);
     loopl(256)
     {
@@ -326,5 +326,4 @@ void load_world(char *mname)        // still supports all map formats that have 
 };
 
 COMMANDN(savemap, save_world, ARG_1STR);
-
 

@@ -14,14 +14,14 @@ int getclientnum() { return clientnum; }
 bool multiplayer()
 {
   // check not correct on listen server?
-  if(clienthost) conoutf("operation not available in multiplayer");
+  if(clienthost) console::out("operation not available in multiplayer");
   return clienthost!=NULL;
 }
 
 bool allowedittoggle()
 {
   bool allow = !clienthost || gamemode==1;
-  if(!allow) conoutf("editing in multiplayer requires coopedit mode (1)");
+  if(!allow) console::out("editing in multiplayer requires coopedit mode (1)");
   return allow; 
 }
 
@@ -66,13 +66,13 @@ void connects(char *servername)
   disconnect(1);  // reset state
   addserver(servername);
 
-  conoutf("attempting to connect to %s", servername);
+  console::out("attempting to connect to %s", servername);
   ENetAddress address = { ENET_HOST_ANY, CUBE_SERVER_PORT };
   if(enet_address_set_host(&address, servername) < 0)
   {
-    conoutf("could not resolve server %s", servername);
+    console::out("could not resolve server %s", servername);
     return;
-  };
+  }
 
   clienthost = enet_host_create(NULL, 1, rate, rate);
 
@@ -85,10 +85,10 @@ void connects(char *servername)
   }
   else
   {
-    conoutf("could not connect to server");
+    console::out("could not connect to server");
     disconnect();
-  };
-};
+  }
+}
 
 void disconnect(int onlyclean, int async)
 {
@@ -99,16 +99,16 @@ void disconnect(int onlyclean, int async)
       enet_peer_disconnect(clienthost->peers);
       enet_host_flush(clienthost);
       disconnecting = lastmillis;
-    };
+    }
     if(clienthost->peers->state != ENET_PEER_STATE_DISCONNECTED)
     {
       if(async) return;
       enet_peer_reset(clienthost->peers);
-    };
+    }
     enet_host_destroy(clienthost);
-  };
+  }
 
-  if(clienthost && !connecting) conoutf("disconnected");
+  if(clienthost && !connecting) console::out("disconnected");
   clienthost = NULL;
   connecting = 0;
   connattempts = 0;
@@ -120,29 +120,29 @@ void disconnect(int onlyclean, int async)
 
   localdisconnect();
 
-  if(!onlyclean) { stop(); localconnect(); };
-};
+  if(!onlyclean) { stop(); localconnect(); }
+}
 
 void trydisconnect()
 {
   if(!clienthost)
   {
-    conoutf("not connected");
+    console::out("not connected");
     return;
-  };
+  }
   if(connecting) 
   {
-    conoutf("aborting connection attempt");
+    console::out("aborting connection attempt");
     disconnect();
     return;
-  };
-  conoutf("attempting to disconnect...");
+  }
+  console::out("attempting to disconnect...");
   disconnect(0, !disconnecting);
-};
+}
 
 string ctext;
-void toserver(char *text) { conoutf("%s:\f %s", player1->name, text); strn0cpy(ctext, text, 80); };
-void echo(char *text) { conoutf("%s", text); };
+void toserver(char *text) { console::out("%s:\f %s", player1->name, text); strn0cpy(ctext, text, 80); }
+void echo(char *text) { console::out("%s", text); }
 
 COMMAND(echo, ARG_VARI);
 COMMANDN(say, toserver, ARG_VARI);
@@ -156,8 +156,8 @@ vector<ivector> messages;
 void addmsg(int rel, int num, int type, ...)
 {
   if(demoplayback) return;
-  if(num!=msgsizelookup(type)) { sprintf_sd(s)("inconsistant msg size for %d (%d != %d)", type, num, msgsizelookup(type)); fatal(s); };
-  if(messages.length()==100) { conoutf("command flood protection (type %d)", type); return; };
+  if(num!=msgsizelookup(type)) { sprintf_sd(s)("inconsistant msg size for %d (%d != %d)", type, num, msgsizelookup(type)); fatal(s); }
+  if(messages.length()==100) { console::out("command flood protection (type %d)", type); return; }
   ivector &msg = messages.add();
   msg.add(num);
   msg.add(rel);
@@ -166,23 +166,23 @@ void addmsg(int rel, int num, int type, ...)
   va_start(marker, type); 
   loopi(num-1) msg.add(va_arg(marker, int));
   va_end(marker);  
-};
+}
 
 void server_err()
 {
-  conoutf("server network error, disconnecting...");
+  console::out("server network error, disconnecting...");
   disconnect();
-};
+}
 
 int lastupdate = 0, lastping = 0;
 string toservermap;
 bool senditemstoserver = false;     // after a map change, since server doesn't have map data
 
 string clientpassword;
-void password(char *p) { strcpy_s(clientpassword, p); };
+void password(char *p) { strcpy_s(clientpassword, p); }
 COMMAND(password, ARG_1STR);
 
-bool netmapstart() { senditemstoserver = true; return clienthost!=NULL; };
+bool netmapstart() { senditemstoserver = true; return clienthost!=NULL; }
 
 void initclientnet()
 {
@@ -191,7 +191,7 @@ void initclientnet()
   clientpassword[0] = 0;
   newname("unnamed");
   newteam("red");
-};
+}
 
 void sendpackettoserv(void *packet)
 {
@@ -239,14 +239,14 @@ void c2sinfo(dynent *d)                     // send update to the server
       putint(p, -1);
       senditemstoserver = false;
       serveriteminitdone = true;
-    };
+    }
     if(ctext[0])    // player chat, not flood protected for now
     {
       packet->flags = ENET_PACKET_FLAG_RELIABLE;
       putint(p, SV_TEXT);
       sendstring(ctext, p);
       ctext[0] = 0;
-    };
+    }
     if(!c2sinit)    // tell other clients who I am
     {
       packet->flags = ENET_PACKET_FLAG_RELIABLE;
@@ -255,21 +255,21 @@ void c2sinfo(dynent *d)                     // send update to the server
       sendstring(player1->name, p);
       sendstring(player1->team, p);
       putint(p, player1->lifesequence);
-    };
+    }
     loopv(messages)     // send messages collected during the previous frames
     {
       ivector &msg = messages[i];
       if(msg[1]) packet->flags = ENET_PACKET_FLAG_RELIABLE;
       loopi(msg[0]) putint(p, msg[i+2]);
-    };
+    }
     messages.setsize(0);
     if(lastmillis-lastping>250)
     {
       putint(p, SV_PING);
       putint(p, lastmillis);
       lastping = lastmillis;
-    };
-  };
+    }
+  }
   *(ushort *)start = ENET_HOST_TO_NET_16(p-start);
   enet_packet_resize(packet, p-start);
   incomingdemodata(start, p-start, true);
@@ -277,7 +277,7 @@ void c2sinfo(dynent *d)                     // send update to the server
   else localclienttoserver(packet);
   lastupdate = lastmillis;
   if(serveriteminitdone) loadgamerest();  // hack
-};
+}
 
 void gets2c()           // get updates from the server
 {
@@ -285,27 +285,27 @@ void gets2c()           // get updates from the server
   if(!clienthost) return;
   if(connecting && lastmillis/3000 > connecting/3000)
   {
-    conoutf("attempting to connect...");
+    console::out("attempting to connect...");
     connecting = lastmillis;
     ++connattempts; 
     if(connattempts > 3)
     {
-      conoutf("could not connect to server");
+      console::out("could not connect to server");
       disconnect();
       return;
-    };
-  };
-  while(clienthost!=NULL && enet_host_service(clienthost, &event, 0)>0)
+    }
+  }
+  while (clienthost!=NULL && enet_host_service(clienthost, &event, 0)>0)
     switch(event.type)
     {
       case ENET_EVENT_TYPE_CONNECT:
-        conoutf("connected to server");
+        console::out("connected to server");
         connecting = 0;
         throttle();
         break;
 
       case ENET_EVENT_TYPE_RECEIVE:
-        if(disconnecting) conoutf("attempting to disconnect...");
+        if(disconnecting) console::out("attempting to disconnect...");
         else localservertoclient(event.packet->data, event.packet->dataLength);
         enet_packet_destroy(event.packet);
         break;
@@ -316,6 +316,5 @@ void gets2c()           // get updates from the server
         return;
       default:break;
     }
-};
-
+}
 

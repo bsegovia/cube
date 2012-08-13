@@ -286,6 +286,5 @@ void render_world(float vx, float vy, float vh, int yaw, int pitch, float fov, i
 
     render_seg_new(vx, vy, vh, MAX_MIP, 0, 0, ssize>>MAX_MIP, ssize>>MAX_MIP);
     mipstats(stats[0], stats[1], stats[2]);
-};
-
+}
 

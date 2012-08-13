@@ -9,7 +9,7 @@ extern string clientpassword;
 
 void neterr(const char *s)
 {
-    conoutf("illegal network message (%s)", s);
+    console::out("illegal network message (%s)", s);
     disconnect();
 };
 
@@ -69,7 +69,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
             int prot = getint(p);
             if(prot!=PROTOCOL_VERSION)
             {
-                conoutf("you are using a different game protocol (you: %d, server: %d)", PROTOCOL_VERSION, prot);
+                console::out("you are using a different game protocol (you: %d, server: %d)", PROTOCOL_VERSION, prot);
                 disconnect();
                 return;
             };
@@ -79,13 +79,13 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
             sgetstr();
             if(text[0] && strcmp(text, clientpassword))
             {
-                conoutf("you need to set the correct password to join this server!");
+                console::out("you need to set the correct password to join this server!");
                 disconnect();
                 return;
             };
             if(getint(p)==1)
             {
-                conoutf("server is FULL, disconnecting..");
+                console::out("server is FULL, disconnecting..");
             };
             break;
         };
@@ -117,12 +117,12 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
         };
 
         case SV_SOUND:
-            sound_play(getint(p), &d->o);
+            sound::play(getint(p), &d->o);
             break;
 
         case SV_TEXT:
             sgetstr();
-            conoutf("%s:\f %s", d->name, text); 
+            console::out("%s:\f %s", d->name, text); 
             break;
 
         case SV_MAPCHANGE:     
@@ -154,12 +154,12 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
             if(d->name[0])          // already connected
             {
                 if(strcmp(d->name, text))
-                    conoutf("%s is now known as %s", d->name, text);
+                    console::out("%s is now known as %s", d->name, text);
             }
             else                    // new client
             {
                 c2sinit = false;    // send new players my info again 
-                conoutf("connected: %s", text);
+                console::out("connected: %s", text);
             }; 
             strcpy_s(d->name, text);
             sgetstr();
@@ -171,7 +171,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
         case SV_CDIS:
             cn = getint(p);
             if(!(d = getclient(cn))) break;
-			conoutf("player %s disconnected", d->name[0] ? d->name : "[incompatible client]"); 
+			console::out("player %s disconnected", d->name[0] ? d->name : "[incompatible client]"); 
             zapdynent(players[cn]);
             break;
 
@@ -196,7 +196,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
             int damage = getint(p);
             int ls = getint(p);
             if(target==clientnum) { if(ls==player1->lifesequence) selfdamage(damage, cn, d); }
-            else sound_play(S_PAIN1+rnd(5), &getclient(target)->o);
+            else sound::play(S_PAIN1+rnd(5), &getclient(target)->o);
             break;
         };
 
@@ -205,7 +205,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
             int actor = getint(p);
             if(actor==cn)
             {
-                conoutf("%s suicided", d->name);
+                console::out("%s suicided", d->name);
             }
             else if(actor==clientnum)
             {
@@ -213,12 +213,12 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
                 if(isteam(player1->team, d->team))
                 {
                     frags = -1;
-                    conoutf("you fragged a teammate (%s)", d->name);
+                    console::out("you fragged a teammate (%s)", d->name);
                 }
                 else
                 {
                     frags = 1;
-                    conoutf("you fragged %s", d->name);
+                    console::out("you fragged %s", d->name);
                 };
                 addmsg(1, 2, SV_FRAGS, player1->frags += frags);
             }
@@ -229,15 +229,15 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
                 {
                     if(isteam(a->team, d->name))
                     {
-                        conoutf("%s fragged his teammate (%s)", a->name, d->name);
+                        console::out("%s fragged his teammate (%s)", a->name, d->name);
                     }
                     else
                     {
-                        conoutf("%s fragged %s", a->name, d->name);
+                        console::out("%s fragged %s", a->name, d->name);
                     };
                 };
             };
-            sound_play(S_DIE1+rnd(2), &d->o);
+            sound::play(S_DIE1+rnd(2), &d->o);
             d->lifesequence++;
             break;
         };
@@ -257,7 +257,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
             setspawn(i, true);
             if(i>=(uint)ents.length()) break;
             vec v = { ents[i].x, ents[i].y, ents[i].z };
-            sound_play(S_ITEMSPAWN, &v); 
+            sound::play(S_ITEMSPAWN, &v); 
             break;
         };
 
@@ -329,7 +329,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
         case SV_RECVMAP:
         {
             sgetstr();
-            conoutf("received map \"%s\" from server, reloading..", text);
+            console::out("received map \"%s\" from server, reloading..", text);
             int mapsize = getint(p);
             writemap(text, mapsize, p);
             p += mapsize;
@@ -339,7 +339,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
         
         case SV_SERVMSG:
             sgetstr();
-            conoutf("%s", text);
+            console::out("%s", text);
             break;
 
         case SV_EXT:        // so we can messages without breaking previous clients/servers, if necessary

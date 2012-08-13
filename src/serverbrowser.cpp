@@ -259,7 +259,7 @@ void refreshservers()
             sprintf_s(si.full)(si.address.host != ENET_HOST_ANY ? "%s [waiting for server response]" : "%s [unknown host]\t", si.name);
         }
         si.full[50] = 0; // cut off too long server descriptions
-        menumanual(1, i, si.full);
+        menu::manual(1, i, si.full);
         if(!--maxmenu) return;
     };
 };
@@ -274,7 +274,7 @@ void servermenu()
     resolverclear();
     loopv(servers) resolverquery(servers[i].name);
     refreshservers();
-    menuset(1);
+    menu::set(1);
 };
 
 void updatefrommaster()
@@ -282,7 +282,7 @@ void updatefrommaster()
     const int MAXUPD = 32000;
     uchar buf[MAXUPD];
     uchar *reply = retrieveservers(buf, MAXUPD);
-    if(!*reply || strstr((char *)reply, "<html>") || strstr((char *)reply, "<HTML>")) conoutf("master server not replying");
+    if(!*reply || strstr((char *)reply, "<html>") || strstr((char *)reply, "<HTML>")) console::out("master server not replying");
     else { servers.setsize(0); execute((char *)reply); };
     servermenu();
 };
@@ -298,7 +298,5 @@ void writeservercfg()
     fprintf(f, "// servers connected to are added here automatically\n\n");
     loopvrev(servers) fprintf(f, "addserver %s\n", servers[i].name);
     fclose(f);
-};
-
-
+}
 

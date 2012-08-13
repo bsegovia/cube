@@ -178,7 +178,7 @@ void loadsky(char *basename)
     {
         sprintf_sd(name)("packages/%s_%s.jpg", basename, side[i]);
         int xs, ys;
-        if(!installtex(texnum+i, path(name), xs, ys, true)) conoutf("could not load sky textures");
+        if(!installtex(texnum+i, path(name), xs, ys, true)) console::out("could not load sky textures");
     };
     strcpy_s(lastsky, basename);
 };
@@ -298,14 +298,14 @@ void gl_drawhud(int w, int h, int curfps, int nquads, int curvert, bool underwat
 
     glEnable(GL_TEXTURE_2D);
 
-    char *command = getcurcommand();
+    char *command = console::getcurcommand();
     char *player = playerincrosshair();
     if(command) draw_textf("> %s_", 20, 1570, 2, command);
     else if(closeent[0]) draw_text(closeent, 20, 1570, 2);
     else if(player) draw_text(player, 20, 1570, 2);
 
     renderscores();
-    if(!rendermenu())
+    if(!menu::render())
     {
         glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
         glBindTexture(GL_TEXTURE_2D, 1);
@@ -329,7 +329,7 @@ void gl_drawhud(int w, int h, int curfps, int nquads, int curvert, bool underwat
 
     glPushMatrix();    
     glOrtho(0, VIRTW*4/3, VIRTH*4/3, 0, -1, 1);
-    renderconsole();
+    console::render();
 
     if(!hidestats)
     {
@@ -368,5 +368,5 @@ void gl_drawhud(int w, int h, int curfps, int nquads, int curvert, bool underwat
     glDisable(GL_BLEND);
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_DEPTH_TEST);
-};
+}
 

@@ -69,13 +69,13 @@ void correctsel()                                       // ensures above invaria
 bool noteditmode()
 {
   correctsel();
-  if(!editmode) conoutf("this function is only allowed in edit mode");
+  if(!editmode) console::out("this function is only allowed in edit mode");
   return !editmode;
 };
 
 bool noselection()
 {
-  if(!selset) conoutf("no selection");
+  if(!selset) console::out("no selection");
   return !selset;
 };
 
@@ -205,7 +205,7 @@ void makeundo()
 void editundo()
 {
   EDITMP;
-  if(undos.empty()) { conoutf("nothing more to undo"); return; };
+  if(undos.empty()) { console::out("nothing more to undo"); return; };
   block *p = undos.pop();
   blockpaste(*p);
   free(p);
@@ -223,11 +223,11 @@ void copy()
 void paste()
 {
   EDITMP;
-  if(!copybuf) { conoutf("nothing to paste"); return; };
+  if(!copybuf) { console::out("nothing to paste"); return; };
   sel.xs = copybuf->xs;
   sel.ys = copybuf->ys;
   correctsel();
-  if(!selset || sel.xs!=copybuf->xs || sel.ys!=copybuf->ys) { conoutf("incorrect selection"); return; };
+  if(!selset || sel.xs!=copybuf->xs || sel.ys!=copybuf->ys) { console::out("incorrect selection"); return; };
   makeundo();
   copybuf->x = sel.x;
   copybuf->y = sel.y;
@@ -344,7 +344,7 @@ void edittype(int type)
   EDITSEL;
   if(type==CORNER && (sel.xs!=sel.ys || sel.xs==3 || sel.xs>4) &&
       (sel.xs!=8 || sel.x&~-sel.xs || sel.y&~-sel.ys))
-  { conoutf("corner selection must be power of 2 aligned"); return; };
+  { console::out("corner selection must be power of 2 aligned"); return; };
   edittypexy(type, sel);
   addmsg(1, 6, SV_EDITS, sel.x, sel.y, sel.xs, sel.ys, type);
 };
@@ -485,5 +485,4 @@ COMMAND(paste, ARG_NONE);
 COMMAND(edittex, ARG_2INT);
 COMMAND(newent, ARG_5STR);
 COMMAND(perlin, ARG_3INT);
-
 

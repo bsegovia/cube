@@ -152,7 +152,7 @@ void arenarespawn()
         if(arenarespawnwait<lastmillis)
         {
             arenarespawnwait = 0;
-            conoutf("new round starting... fight!");
+            console::out("new round starting... fight!");
             respawnself();
         };
     }
@@ -166,9 +166,9 @@ void arenarespawn()
         arenacount(player1, alive, dead, lastteam, oneteam);
         if(dead>0 && (alive<=1 || (m_teammode && oneteam)))
         {
-            conoutf("arena round is over! next round in 5 seconds...");
-            if(alive) conoutf("team %s is last man standing", lastteam);
-            else conoutf("everyone died!");
+            console::out("arena round is over! next round in 5 seconds...");
+            if(alive) console::out("team %s is last man standing", lastteam);
+            else console::out("everyone died!");
             arenarespawnwait = lastmillis+5000;
             arenadetectwait  = lastmillis+10000;
             player1->roll = 0;
@@ -203,7 +203,7 @@ void respawn()
     if(player1->state==CS_DEAD)
     { 
         player1->attacking = false;
-        if(m_arena) { conoutf("waiting for new round to start..."); return; };
+        if(m_arena) { console::out("waiting for new round to start..."); return; };
         if(m_sp) { nextmode = gamemode; changemap(clientmap); return; };    // if we die in SP we try the same map again
         respawnself();
     };
@@ -266,7 +266,7 @@ void entinmap(dynent *d)    // brute force but effective way to find a free spaw
         d->o.x -= dx;
         d->o.y -= dy;
     };
-    conoutf("can't find entity spawn spot! (%d, %d)", (int)d->o.x, (int)d->o.y);
+    console::out("can't find entity spawn spot! (%d, %d)", (int)d->o.x, (int)d->o.y);
     // leave ent at original pos, possibly stuck
 };
 
@@ -357,12 +357,12 @@ void selfdamage(int damage, int actor, dynent *act)
     {
         if(actor==-2)
         {
-            conoutf("you got killed by %s!", act->name);
+            console::out("you got killed by %s!", act->name);
         }
         else if(actor==-1)
         {
             actor = getclientnum();
-            conoutf("you suicided!");
+            console::out("you suicided!");
             addmsg(1, 2, SV_FRAGS, --player1->frags);
         }
         else
@@ -372,11 +372,11 @@ void selfdamage(int damage, int actor, dynent *act)
             {
                 if(isteam(a->team, player1->team))
                 {
-                    conoutf("you got fragged by a teammate (%s)", a->name);
+                    console::out("you got fragged by a teammate (%s)", a->name);
                 }
                 else
                 {
-                    conoutf("you got fragged by %s", a->name);
+                    console::out("you got fragged by %s", a->name);
                 };
             };
         };
@@ -387,13 +387,13 @@ void selfdamage(int damage, int actor, dynent *act)
         player1->state = CS_DEAD;
         player1->pitch = 0;
         player1->roll = 60;
-        sound_play(S_DIE1+rnd(2));
+        sound::play(S_DIE1+rnd(2));
         spawnstate(player1);
         player1->lastaction = lastmillis;
     }
     else
     {
-        sound_play(S_PAIN6);
+        sound::play(S_PAIN6);
     };
 };
 
@@ -403,13 +403,13 @@ void timeupdate(int timeremain)
     {
         intermission = true;
         player1->attacking = false;
-        conoutf("intermission:");
-        conoutf("game has ended!");
+        console::out("intermission:");
+        console::out("game has ended!");
         showscores(true);
     }
     else
     {
-        conoutf("time remaining: %d minutes", timeremain);
+        console::out("time remaining: %d minutes", timeremain);
     };
 };
 
@@ -432,7 +432,7 @@ void initclient()
 
 void startmap(const char *name)   // called just after a map load
 {
-    if(netmapstart() && m_sp) { gamemode = 0; conoutf("coop sp not supported yet"); };
+    if(netmapstart() && m_sp) { gamemode = 0; console::out("coop sp not supported yet"); };
     sleepwait = 0;
     monsterclear();
     projreset(); 
@@ -449,7 +449,7 @@ void startmap(const char *name)   // called just after a map load
     showscores(false);
     intermission = false;
     framesinmap = 0;
-    conoutf("game mode is %s", modestr(gamemode));
+    console::out("game mode is %s", modestr(gamemode));
 }; 
 
 COMMANDN(map, changemap, ARG_1STR);

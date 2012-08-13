@@ -43,7 +43,7 @@ void savestate(char *fn)
 {
     stop();
     f = gzopen(fn, "wb9");
-    if(!f) { conoutf("could not write %s", fn); return; };
+    if(!f) { console::out("could not write %s", fn); return; };
     gzwrite(f, (void *)"CUBESAVE", 8);
     gzputc(f, islittleendian);  
     gzputi(SAVEGAMEVERSION);
@@ -66,11 +66,11 @@ void savestate(char *fn)
 
 void savegame(char *name)
 {
-    if(!m_classicsp) { conoutf("can only save classic sp games"); return; };
+    if(!m_classicsp) { console::out("can only save classic sp games"); return; };
     sprintf_sd(fn)("savegames/%s.csgz", name);
     savestate(fn);
     stop();
-    conoutf("wrote %s", fn);
+    console::out("wrote %s", fn);
 };
 
 void loadstate(char *fn)
@@ -78,7 +78,7 @@ void loadstate(char *fn)
     stop();
     if(multiplayer()) return;
     f = gzopen(fn, "rb9");
-    if(!f) { conoutf("could not open %s", fn); return; };
+    if(!f) { console::out("could not open %s", fn); return; };
     
     string buf;
     gzread(f, buf, 8);
@@ -91,7 +91,7 @@ void loadstate(char *fn)
     changemap(mapname); // continue below once map has been loaded and client & server have updated 
     return;
     out:    
-    conoutf("aborting: savegame/demo from a different version of cube or cpu architecture");
+    console::out("aborting: savegame/demo from a different version of cube or cpu architecture");
     stop();
 };
 
@@ -104,7 +104,7 @@ void loadgame(char *name)
 void loadgameout()
 {
     stop();
-    conoutf("loadgame incomplete: savegame from a different version of this map");
+    console::out("loadgame incomplete: savegame from a different version of this map");
 };
 
 void loadgamerest()
@@ -142,7 +142,7 @@ void loadgamerest()
         gzread(f, d, sizeof(dynent));        
     };
     
-    conoutf("savegame restored");
+    console::out("savegame restored");
     if(demoloading) startdemo(); else stop();
 };
 
@@ -155,13 +155,13 @@ vec dorig;
 
 void record(char *name)
 {
-    if(m_sp) { conoutf("cannot record singleplayer games"); return; };
+    if(m_sp) { console::out("cannot record singleplayer games"); return; };
     int cn = getclientnum();
     if(cn<0) return;
     sprintf_sd(fn)("demos/%s.cdgz", name);
     savestate(fn);
     gzputi(cn);
-    conoutf("started recording demo to %s", fn);
+    console::out("started recording demo to %s", fn);
     demorecording = true;
     starttime = lastmillis;
 	ddamage = bdamage = 0;
@@ -205,7 +205,7 @@ void demo(char *name)
 
 void stopreset()
 {
-    conoutf("demo stopped (%d msec elapsed)", lastmillis-starttime);
+    console::out("demo stopped (%d msec elapsed)", lastmillis-starttime);
     stop();
     loopv(players) zapdynent(players[i]);
     disconnect(0, 0);
@@ -229,7 +229,7 @@ void startdemo()
     democlientnum = gzgeti();
     demoplayback = true;
     starttime = lastmillis;
-    conoutf("now playing demo");
+    console::out("now playing demo");
     dynent *d = getclient(democlientnum);
     assert(d);
     *d = *player1;
@@ -270,7 +270,7 @@ void demoplaybackstep()
         int len = gzgeti();
         if(len<1 || len>MAXTRANS)
         {
-            conoutf("error: huge packet during demo play (%d)", len);
+            console::out("error: huge packet during demo play (%d)", len);
             stopreset();
             return;
         };
@@ -350,12 +350,11 @@ void demoplaybackstep()
     };
 };
 
-void stopn() { if(demoplayback) stopreset(); else stop(); conoutf("demo stopped"); };
+void stopn() { if(demoplayback) stopreset(); else stop(); console::out("demo stopped"); };
 
 COMMAND(record, ARG_1STR);
 COMMAND(demo, ARG_1STR);
 COMMANDN(stop, stopn, ARG_NONE);
-
 COMMAND(savegame, ARG_1STR);
 COMMAND(loadgame, ARG_1STR);
 

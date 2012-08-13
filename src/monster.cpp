@@ -5,7 +5,7 @@
 dvector monsters;
 int nextmonster, spawnremain, numkilled, monstertotal, mtimestart;
 
-VARF(skill, 1, 3, 10, conoutf("skill is now %d", skill));
+VARF(skill, 1, 3, 10, console::out("skill is now %d", skill));
 
 dvector &getmonsters() { return monsters; };
 void restoremonsterstate() { loopv(monsters) if(monsters[i]->state==CS_DEAD) numkilled++; };        // for savegames
@@ -36,7 +36,7 @@ dynent *basicmonster(int type, int yaw, int state, int trigger, int move)
 {
     if(type>=NUMMONSTERTYPES)
     {
-        conoutf("warning: unknown monster in spawn: %d", type);
+        console::out("warning: unknown monster in spawn: %d", type);
         type = 0;
     };
     dynent *m = newdynent();
@@ -211,7 +211,7 @@ void monsteraction(dynent *m)           // main AI thinking routine, called ever
             || angle<10)
             {
                 transition(m, M_HOME, 1, 500, 200);
-                sound_play(S_GRUNT1+rnd(2), &m->o);
+                sound::play(S_GRUNT1+rnd(2), &m->o);
             };
             break;
         };
@@ -277,20 +277,20 @@ void monsterpain(dynent *m, int damage, dynent *d)
         m->lastaction = lastmillis;
         numkilled++;
         player1->frags = numkilled;
-        sound_play(monstertypes[m->mtype].diesound, &m->o);
+        sound::play(monstertypes[m->mtype].diesound, &m->o);
         int remain = monstertotal-numkilled;
-        if(remain>0 && remain<=5) conoutf("only %d monster(s) remaining", remain);
+        if(remain>0 && remain<=5) console::out("only %d monster(s) remaining", remain);
     }
     else
     {
-        sound_play(monstertypes[m->mtype].painsound, &m->o);
+        sound::play(monstertypes[m->mtype].painsound, &m->o);
     };
 };
 
 void endsp(bool allkilled)
 {
-    conoutf(allkilled ? "you have cleared the map!" : "you reached the exit!");
-    conoutf("score: %d kills in %d seconds", numkilled, (lastmillis-mtimestart)/1000);
+    console::out(allkilled ? "you have cleared the map!" : "you reached the exit!");
+    console::out("score: %d kills in %d seconds", numkilled, (lastmillis-mtimestart)/1000);
     monstertotal = 0;
     startintermission();
 };
@@ -299,7 +299,7 @@ void monsterthink()
 {
     if(m_dmsp && spawnremain && lastmillis>nextmonster)
     {
-        if(spawnremain--==monstertotal) conoutf("The invasion has begun!");
+        if(spawnremain--==monstertotal) console::out("The invasion has begun!");
         nextmonster = lastmillis+1000;
         spawnmonster();
     };

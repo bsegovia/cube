@@ -97,7 +97,6 @@ pool *gp()  // useful for global buffers that need to be initialisation order in
     return p ? p : (p = new pool());
 };
 
-
 ///////////////////////// misc tools ///////////////////////
 
 char *path(char *s)

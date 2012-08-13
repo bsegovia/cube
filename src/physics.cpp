@@ -234,13 +234,13 @@ void moveplayer(dynent *pl, int moveres, bool local, int curtime)
                 pl->jumpnext = false;
                 pl->vel.z = 1.7f;       // physics impulse upwards
                 if(water) { pl->vel.x /= 8; pl->vel.y /= 8; };      // dampen velocity change even harder, gives correct water feel
-                if(local) sound_playc(S_JUMP);
-                else if(pl->monsterstate) sound_play(S_JUMP, &pl->o);
+                if(local) sound::playc(S_JUMP);
+                else if(pl->monsterstate) sound::play(S_JUMP, &pl->o);
             }
             else if(pl->timeinair>800)  // if we land after long time must have been a high jump, make thud sound
             {
-                if(local) sound_playc(S_LAND);
-                else if(pl->monsterstate) sound_play(S_LAND, &pl->o);
+                if(local) sound::playc(S_LAND);
+                else if(pl->monsterstate) sound::play(S_LAND, &pl->o);
             };
             pl->timeinair = 0;
         }
@@ -311,8 +311,8 @@ void moveplayer(dynent *pl, int moveres, bool local, int curtime)
     
     // play sounds on water transitions
     
-    if(!pl->inwater && water) { sound_play(S_SPLASH2, &pl->o); pl->vel.z = 0; }
-    else if(pl->inwater && !water) sound_play(S_SPLASH1, &pl->o);
+    if(!pl->inwater && water) { sound::play(S_SPLASH2, &pl->o); pl->vel.z = 0; }
+    else if(pl->inwater && !water) sound::play(S_SPLASH1, &pl->o);
     pl->inwater = water;
 };
 
@@ -320,5 +320,4 @@ void moveplayer(dynent *pl, int moveres, bool local)
 {
     loopi(physicsrepeat) moveplayer(pl, moveres, local, i ? curtime/physicsrepeat : curtime-curtime/physicsrepeat*(physicsrepeat-1));
 };
-
 

@@ -34,7 +34,7 @@ void alias(const char *name, const char *action)
   else
   {
     if(b->type==ID_ALIAS) b->action = exchangestr(b->action, action);
-    else conoutf("cannot redefine builtin %s with an alias", name);
+    else console::out("cannot redefine builtin %s with an alias", name);
   };
 };
 
@@ -78,7 +78,7 @@ char *parseexp(char *&p, int right)             // parse any nested set of () or
     if(c=='\r') *(p-1) = ' ';               // hack
     if(c==left) brak++;
     else if(c==right) brak--;
-    else if(!c) { p--; conoutf("missing \"%c\"", right); return NULL; };
+    else if(!c) { p--; console::out("missing \"%c\"", right); return NULL; };
   };
   char *s = newstring(word, p-word-1);
   if(left=='(')
@@ -119,7 +119,7 @@ char *lookup(char *n)                     // find value of ident referenced with
     case ID_VAR: string t; itoa(t, *(id->storage)); return exchangestr(n, t);
     case ID_ALIAS: return exchangestr(n, id->action);
   };
-  conoutf("unknown alias lookup: %s", n+1);
+  console::out("unknown alias lookup: %s", n+1);
   return n;
 };
 
@@ -151,7 +151,7 @@ int execute(char *p, bool isdown)               // all evaluation happens here, 
     if(!id)
     {
       val = ATOI(c);
-      if(!val && *c!='0') conoutf("unknown command: %s", c);
+      if(!val && *c!='0') console::out("unknown command: %s", c);
     }
     else switch(id->type)
     {
@@ -193,12 +193,12 @@ int execute(char *p, bool isdown)               // all evaluation happens here, 
       case ID_VAR:                        // game defined variabled 
         if(isdown)
         {
-          if(!w[1][0]) conoutf("%s = %d", c, *id->storage);      // var with no value just prints its current value
+          if(!w[1][0]) console::out("%s = %d", c, *id->storage);      // var with no value just prints its current value
           else
           {
             if(id->min>id->max)
             {
-              conoutf("variable is read-only");
+              console::out("variable is read-only");
             }
             else
             {
@@ -206,7 +206,7 @@ int execute(char *p, bool isdown)               // all evaluation happens here, 
               if(i1<id->min || i1>id->max)
               {
                 i1 = i1<id->min ? id->min : id->max;                // clamp to valid range
-                conoutf("valid range for %s is %d..%d", c, id->min, id->max);
+                console::out("valid range for %s is %d..%d", c, id->min, id->max);
               }
               *id->storage = i1;
             };
@@ -273,7 +273,7 @@ bool execfile(const char *cfgfile)
 
 void exec(const char *cfgfile)
 {
-  if(!execfile(cfgfile)) conoutf("could not read \"%s\"", cfgfile);
+  if(!execfile(cfgfile)) console::out("could not read \"%s\"", cfgfile);
 };
 
 void writecfg()
@@ -292,7 +292,7 @@ void writecfg()
       };
       );
   fprintf(f, "\n");
-  writebinds(f);
+  console::writebinds(f);
   fprintf(f, "\n");
   enumerate(idents, ident *, id,
       if(id->type==ID_ALIAS && !strstr(id->name, "nextmap_"))
@@ -366,5 +366,4 @@ int strcmpa(char *a, char *b) { return strcmp(a,b)==0; };  COMMANDN(strcmp, strc
 int rndn(int a)    { return a>0 ? rnd(a) : 0; };  COMMANDN(rnd, rndn, ARG_1EXP);
 
 int explastmillis() { return lastmillis; };  COMMANDN(millis, explastmillis, ARG_1EXP);
-
 

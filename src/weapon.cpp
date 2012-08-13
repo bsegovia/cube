@@ -34,9 +34,9 @@ void selectgun(int a, int b, int c)
     else if(s!=GUN_SG && player1->ammo[GUN_SG]) s = GUN_SG;
     else if(s!=GUN_RIFLE && player1->ammo[GUN_RIFLE]) s = GUN_RIFLE;
     else s = GUN_FIST;
-    if(s!=player1->gunselect) sound_playc(S_WEAPLOAD);
+    if(s!=player1->gunselect) sound::playc(S_WEAPLOAD);
     player1->gunselect = s;
-    //conoutf("%s selected", (int)guns[s].name);
+    //console::out("%s selected", (int)guns[s].name);
 };
 
 int reloadtime(int gun) { return guns[gun].attackdelay; };
@@ -131,7 +131,7 @@ void hit(int target, int damage, dynent *d, dynent *at)
 {
     if(d==player1) selfdamage(damage, at==player1 ? -1 : -2, at);
     else if(d->monsterstate) monsterpain(d, damage, at);
-    else { addmsg(1, 4, SV_DAMAGE, target, damage, d->lifesequence); sound_play(S_PAIN1+rnd(5), &d->o); };
+    else { addmsg(1, 4, SV_DAMAGE, target, damage, d->lifesequence); sound::play(S_PAIN1+rnd(5), &d->o); };
     particle_splash(3, damage, 1000, d->o);
 	demodamage(damage, d->o);
 };
@@ -160,12 +160,12 @@ void splash(projectile *p, vec &v, vec &vold, int notthisplayer, int notthismons
     p->inuse = false;
     if(p->gun!=GUN_RL)
     {
-        sound_play(S_FEXPLODE, &v);
+        sound::play(S_FEXPLODE, &v);
         // no push?
     }
     else
     {
-        sound_play(S_RLHIT, &v);
+        sound::play(S_RLHIT, &v);
         newsphere(v, RL_RADIUS, 0);
         dodynlight(vold, v, 0, 0, p->owner);
         if(!p->local) return;
@@ -232,7 +232,7 @@ void moveprojectiles(float time)
 
 void shootv(int gun, vec &from, vec &to, dynent *d, bool local)     // create visual effect from a shot
 {
-    sound_play(guns[gun].sound, d==player1 ? NULL : &d->o);
+    sound::play(guns[gun].sound, d==player1 ? NULL : &d->o);
     int pspeed = 25;
     switch(gun)
     {
@@ -297,7 +297,7 @@ void shoot(dynent *d, vec &targ)
     if(!d->attacking) return;
     d->lastaction = lastmillis;
     d->lastattackgun = d->gunselect;
-    if(!d->ammo[d->gunselect]) { sound_playc(S_NOAMMO); d->gunwait = 250; d->lastattackgun = -1; return; };
+    if(!d->ammo[d->gunselect]) { sound::playc(S_NOAMMO); d->gunwait = 250; d->lastattackgun = -1; return; };
     if(d->gunselect) d->ammo[d->gunselect]--;
     vec from = d->o;
     vec to = targ;
@@ -319,7 +319,7 @@ void shoot(dynent *d, vec &targ)
     };   
     if(d->gunselect==GUN_SG) createrays(from, to);
 
-    if(d->quadmillis && attacktime>200) sound_playc(S_ITEMPUP);
+    if(d->quadmillis && attacktime>200) sound::playc(S_ITEMPUP);
     shootv(d->gunselect, from, to, d, true);
     if(!d->monsterstate) addmsg(1, 8, SV_SHOT, d->gunselect, (int)(from.x*DMF), (int)(from.y*DMF), (int)(from.z*DMF), (int)(to.x*DMF), (int)(to.y*DMF), (int)(to.z*DMF));
     d->gunwait = guns[d->gunselect].attackdelay;
@@ -338,6 +338,4 @@ void shoot(dynent *d, vec &targ)
 
     if(d->monsterstate) raydamage(player1, from, to, d, -1);
 };
-
-
 

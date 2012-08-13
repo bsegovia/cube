@@ -47,7 +47,7 @@ void gl_init(int w, int h)
     char *exts = (char *)glGetString(GL_EXTENSIONS);
 
     if(strstr(exts, "GL_EXT_texture_env_combine")) hasoverbright = true;
-    else conoutf("WARNING: cannot use overbright lighting, using old lighting model!");
+    else console::out("WARNING: cannot use overbright lighting, using old lighting model!");
 
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &glmaxtexsize);
 
@@ -70,8 +70,8 @@ void cleangl()
 bool installtex(int tnum, char *texname, int &xs, int &ys, bool clamp)
 {
     SDL_Surface *s = IMG_Load(texname);
-    if(!s) { conoutf("couldn't load texture %s", texname); return false; };
-    if(s->format->BitsPerPixel!=24) { conoutf("texture must be 24bpp: %s", texname); return false; };
+    if(!s) { console::out("couldn't load texture %s", texname); return false; };
+    if(s->format->BitsPerPixel!=24) { console::out("texture must be 24bpp: %s", texname); return false; };
     // loopi(s->w*s->h*3) { uchar *p = (uchar *)s->pixels+i; *p = 255-*p; };
     glBindTexture(GL_TEXTURE_2D, tnum);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -86,7 +86,7 @@ bool installtex(int tnum, char *texname, int &xs, int &ys, bool clamp)
     void *scaledimg = s->pixels;
     if(xs!=s->w)
     {
-        conoutf("warning: quality loss: scaling %s", texname);     // for voodoo cards under linux
+        console::out("warning: quality loss: scaling %s", texname);     // for voodoo cards under linux
         scaledimg = alloc(xs*ys*3);
         gluScaleImage(GL_RGB, s->w, s->h, GL_UNSIGNED_BYTE, s->pixels, xs, ys, GL_UNSIGNED_BYTE, scaledimg);
     };
@@ -237,8 +237,8 @@ VARFP(gamma, 30, 100, 300,
     float f = gamma/100.0f;
     if(SDL_SetGamma(f,f,f)==-1)
     {
-        conoutf("Could not set gamma (card/driver doesn't support it?)");
-        conoutf("sdl: %s", SDL_GetError());
+        console::out("Could not set gamma (card/driver doesn't support it?)");
+        console::out("sdl: %s", SDL_GetError());
     };
 });
 
@@ -395,5 +395,4 @@ void gl_drawframe(int w, int h, float curfps)
     glEnable(GL_CULL_FACE);
     glEnable(GL_FOG);
 };
-
 

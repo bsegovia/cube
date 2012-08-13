@@ -43,7 +43,7 @@ void trigger(int tag, int type, bool savegame)
 {
     if(!tag) return;
     settag(tag, type);
-    if(!savegame && type!=3) sound_play(S_RUMBLE);
+    if(!savegame && type!=3) sound::play(S_RUMBLE);
     sprintf_sd(aliasname)("level_trigger_%d", tag);
     if(identexists(aliasname)) execute(aliasname);
     if(type==2) endsp(false);
@@ -194,9 +194,9 @@ void entproperty(int prop, int amount)
 void delent()
 {
     int e = closestent();
-    if(e<0) { conoutf("no more entities"); return; };
+    if(e<0) { console::out("no more entities"); return; };
     int t = ents[e].type;
-    conoutf("%s entity deleted", entnames[t]);
+    console::out("%s entity deleted", entnames[t]);
     ents[e].type = NOTUSED;
     addmsg(1, 10, SV_EDITENT, e, NOTUSED, 0, 0, 0, 0, 0, 0, 0);
     if(t==LIGHT) calclight();
@@ -205,7 +205,7 @@ void delent()
 int findtype(char *what)
 {
     loopi(MAXENTTYPES) if(strcmp(what, entnames[i])==0) return i;
-    conoutf("unknown entity type \"%s\"", what);
+    console::out("unknown entity type \"%s\"", what);
     return NOTUSED;
 }
 
@@ -370,5 +370,4 @@ COMMAND(newmap, ARG_1INT);
 COMMANDN(recalc, calclight, ARG_NONE);
 COMMAND(delent, ARG_NONE);
 COMMAND(entproperty, ARG_2INT);
-
 

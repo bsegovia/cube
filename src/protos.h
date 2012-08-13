@@ -15,20 +15,29 @@ extern void alias(const char *name, const char *action);
 extern char *getalias(const char *name);
 extern void writecfg();
 
-// console
-extern void keypress(int code, bool isdown, int cooked);
-extern void renderconsole();
-extern void conoutf(const char *s, ...);
-extern char *getcurcommand();
-extern void writebinds(FILE *f);
+namespace console
+{
+  /*! Handle a pressed key when console is up */
+  void keypress(int code, bool isdown, int cooked);
+  /*! Render buffer taking into account time & scrolling */
+  void render(void);
+  /*! Output a formatted string in the console */
+  void out(const char *s, ...);
+  /*! Get the string for the command currently typed */
+  char *getcurcommand(void);
+  /*! Write all the bindings in the given file */
+  void writebinds(FILE *f);
+}
 
-// menus
-extern bool rendermenu();
-extern void menuset(int menu);
-extern void menumanual(int m, int n, char *text);
-extern void sortmenu(int start, int num);
-extern bool menukey(int code, bool isdown);
-extern void newmenu(const char *name);
+namespace menu
+{
+  bool render(void);
+  void set(int menu);
+  void manual(int m, int n, char *text);
+  void sort(int start, int num);
+  bool key(int code, bool isdown);
+  void newm(const char *name);
+}
 
 // serverbrowser
 extern void addserver(char *servername);
@@ -184,12 +193,14 @@ extern void entinmap(dynent *d);
 extern void setentphysics(int mml, int mmr);
 extern void physicsframe();
 
-// sound
-extern void sound_play(int n, const vec *loc = 0);
-extern void sound_playc(int n);
-extern void sound_init(void);
-extern void sound_clean(void);
-extern void sound_updatevol(void);
+namespace sound
+{
+  void play(int n, const vec *loc = NULL);
+  void playc(int n);
+  void init(void);
+  void clean(void);
+  void updatevol(void);
+}
 
 // rendermd2
 extern void rendermodel(const char *mdl, int frame, int range, int tex, float rad, float x, float y, float z, float yaw, float pitch, bool teammate, float scale, float speed, int snap = 0, int basetime = 0);

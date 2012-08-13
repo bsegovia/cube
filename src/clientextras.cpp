@@ -56,7 +56,7 @@ bool scoreson = false;
 void showscores(bool on)
 {
   scoreson = on;
-  menuset(((int)on)-1);
+  menu::set(((int)on)-1);
 };
 
 struct sline { string s; };
@@ -69,7 +69,7 @@ void renderscore(dynent *d)
   sprintf_s(scorelines.add().s)("%d\t%s\t%d\t%s\t%s",
             d->frags, d->state==CS_LAGGED ? "LAG" : lag,
             d->ping, d->team, d->state==CS_DEAD ? name : d->name);
-  menumanual(0, scorelines.length()-1, scorelines.last().s); 
+  menu::manual(0, scorelines.length()-1, scorelines.last().s); 
 };
 
 const int maxteams = 4;
@@ -93,7 +93,7 @@ void renderscores()
   scorelines.setsize(0);
   if(!demoplayback) renderscore(player1);
   loopv(players) if(players[i]) renderscore(players[i]);
-  sortmenu(0, scorelines.length());
+  menu::sort(0, scorelines.length());
   if(m_teammode)
   {
     teamsused = 0;
@@ -105,8 +105,8 @@ void renderscores()
       sprintf_sd(sc)("[ %s: %d ]", teamname[j], teamscore[j]);
       strcat_s(teamscores, sc);
     };
-    menumanual(0, scorelines.length(), (char*) "");
-    menumanual(0, scorelines.length()+1, teamscores);
+    menu::manual(0, scorelines.length(), (char*) "");
+    menu::manual(0, scorelines.length()+1, teamscores);
   };
 };
 
@@ -128,7 +128,7 @@ void sendmap(char *mapname)
   putint(p, mapsize);
   if(65535 - (p - start) < mapsize)
   {
-    conoutf("map %s is too large to send", mapname);
+    console::out("map %s is too large to send", mapname);
     free(mapdata);
     enet_packet_destroy(packet);
     return;
@@ -139,7 +139,7 @@ void sendmap(char *mapname)
   *(ushort *)start = ENET_HOST_TO_NET_16(p-start);
   enet_packet_resize(packet, p-start);
   sendpackettoserv(packet);
-  conoutf("sending map %s to server...", mapname);
+  console::out("sending map %s to server...", mapname);
   sprintf_sd(msg)("[map %s uploaded to server, \"getmap\" to receive it]", mapname);
   toserver(msg);
 }
@@ -153,10 +153,9 @@ void getmap()
   *(ushort *)start = ENET_HOST_TO_NET_16(p-start);
   enet_packet_resize(packet, p-start);
   sendpackettoserv(packet);
-  conoutf("requesting map from server...");
+  console::out("requesting map from server...");
 }
 
 COMMAND(sendmap, ARG_1STR);
 COMMAND(getmap, ARG_NONE);
-
 

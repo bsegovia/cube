@@ -134,4 +134,3 @@ int isoccluded(float vx, float vy, float cx, float cy, float csize)     // v = v
     return 1;                                       // cube is entirely occluded
 };
 
-

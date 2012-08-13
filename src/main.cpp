@@ -8,7 +8,7 @@ void cleanup(char *msg)         // single program exit point;
     disconnect(true);
     writecfg();
     cleangl();
-    sound_clean();
+    sound::clean();
     cleanupserver();
     SDL_ShowCursor(1);
     if(msg)
@@ -93,7 +93,7 @@ int main(int argc, char **argv)
     const char *master = NULL;
     islittleendian = *((char *)&islittleendian);
 
-    #define log(s) conoutf("init: %s", s)
+    #define log(s) console::out("init: %s", s)
     log("sdl");
     
     for(int i = 1; i<argc; i++)
@@ -111,9 +111,9 @@ int main(int argc, char **argv)
             case 'm': master = a; break;
             case 'p': passwd = a; break;
             case 'c': maxcl  = atoi(a); break;
-            default:  conoutf("unknown commandline option");
+            default:  console::out("unknown commandline option");
         }
-        else conoutf("unknown commandline argument");
+        else console::out("unknown commandline argument");
     };
     
     #ifdef _DEBUG
@@ -162,11 +162,11 @@ int main(int argc, char **argv)
         fatal("could not find core textures (hint: run cube from the parent of the bin directory)");
 
     log("sound");
-    sound_init();
+    sound::init();
 
     log("cfg");
-    newmenu("frags\tpj\tping\tteam\tname");
-    newmenu("ping\tplr\tserver");
+    menu::newm("frags\tpj\tping\tteam\tname");
+    menu::newm("ping\tplr\tserver");
     exec("data/keymap.cfg");
     exec("data/menus.cfg");
     exec("data/prefabs.cfg");
@@ -195,7 +195,7 @@ int main(int argc, char **argv)
         computeraytable(player1->o.x, player1->o.y);
         readdepth(scr_w, scr_h);
         SDL_GL_SwapBuffers();
-        sound_updatevol();
+        sound::updatevol();
         if(framesinmap++<5)    // cheap hack to get rid of initial sparklies, even when triple buffering etc.
         {
             player1->yaw += 5;
@@ -215,7 +215,7 @@ int main(int argc, char **argv)
 
                 case SDL_KEYDOWN: 
                 case SDL_KEYUP: 
-                    keypress(event.key.keysym.sym, event.key.state==SDL_PRESSED, event.key.keysym.unicode);
+                    console::keypress(event.key.keysym.sym, event.key.state==SDL_PRESSED, event.key.keysym.unicode);
                     break;
 
                 case SDL_MOUSEMOTION:
@@ -226,7 +226,7 @@ int main(int argc, char **argv)
                 case SDL_MOUSEBUTTONDOWN:
                 case SDL_MOUSEBUTTONUP:
                     if(lasttype==event.type && lastbut==event.button.button) break; // why?? get event twice without it
-                    keypress(-event.button.button, event.button.state!=0, 0);
+                    console::keypress(-event.button.button, event.button.state!=0, 0);
                     lasttype = event.type;
                     lastbut = event.button.button;
                     break;
